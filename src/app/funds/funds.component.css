@@ -1,0 +1,9 @@
+.pivotTable {
+    font-size: 8px;
+    border: 1px solid grey;
+}
+.valueCell {
+    text-align: right;
+    font-family: 'Courier New', Courier, monospace;
+}
+

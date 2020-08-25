@@ -1,0 +1,16 @@
+<div>
+  <input [(ngModel)]="datemin" size="10" placeholder="Minimum date..." (change)="refreshData()"/>
+  <button *ngFor="let period of periods; let no=index" (click)="setChartData(no+1, period)">{{period}}</button>
+  <highcharts-chart
+    id="chart"
+    [Highcharts]="Highcharts"
+    style="width: 100%; height: 400px; display: block;">
+  </highcharts-chart>
+  <table>
+    <tr *ngFor="let a of avg; let i=index">
+        <td>{{a.symbol}}</td>
+        <td style="text-align: right;">{{a.val}}%</td>
+        <!-- <td style="text-align: right;">={{lr[i].a}} * x + {{lr[i].b}}</td> -->
+    </tr>
+  </table>
+</div>
