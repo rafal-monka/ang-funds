@@ -13,4 +13,15 @@
         <!-- <td style="text-align: right;">={{lr[i].a}} * x + {{lr[i].b}}</td> -->
     </tr>
   </table>
+
+  <select [(ngModel)]="symbol" (change)="setChart2(symbol)">
+      <option *ngFor="let a of avg" value="{{a.symbol}}">{{a.symbol}}</option>
+  </select>
+
+  <highcharts-chart
+  id="chart2"
+  [Highcharts]="Highcharts2"
+  style="width: 100%; height: 400px; display: block;">
+</highcharts-chart>
+
 </div>

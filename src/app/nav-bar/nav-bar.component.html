@@ -10,6 +10,14 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link" routerLink="tfi" *ngIf="auth.loggedIn">TFI</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="tfi-meta" *ngIf="auth.loggedIn">TFI Meta</a>
+      </li>
+
+      <li class="nav-item">
         <button class="btn btn-success" (click)="auth.login()" *ngIf="!auth.loggedIn">Log in</button>
       </li>
       <li class="nav-item">

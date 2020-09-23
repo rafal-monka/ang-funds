@@ -25,4 +25,25 @@ export class ApiService {
   roi$(datemin): Observable<any> {
     return this.http.get(`/api/rois/${datemin}`);
   }
+
+  tfivalues$(symbol): Observable<any> {
+    return this.http.get(`/api/tfi/values/${symbol}`);
+  }
+
+  tfimeta$(symbol): Observable<any> {
+    return this.http.get(`/api/tfi/metadata/${symbol}`);
+  }
+
+  tfiupdate$(symbol): Observable<any> {
+    return this.http.get(`/api/tfi/run/${symbol}`);
+  }
+
+  perform$(): Observable<any> {
+    console.log('perform$()')
+    return this.http.get('/perform')
+  }
+
+  // tficalclr$(symbol): Observable<any> {
+  //   return this.http.get(`/api/tfi/calclr/${symbol}`);
+  // }
 }

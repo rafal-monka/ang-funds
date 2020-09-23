@@ -1,0 +1,22 @@
+<!-- {{ tfimeta | json }} -->
+<!-- <select [(ngModel)]="symbol" (change)="refreshData(symbol)">
+    <option *ngFor="let tfimeta of tfimeta" value="{{tfimeta.symbol}}">
+      {{tfimeta.symbol}} {{tfimeta.name}}
+    </option>
+</select> -->
+
+<!-- <pre *ngIf="lr">LR={{lr.a}} {{lr.b | number: '1.2-2'}}</pre> -->
+<b *ngIf="tfimeta">{{tfimeta[0].symbol}} {{tfimeta[0].name}}</b>
+
+<highcharts-chart
+    id="chart"
+    [Highcharts]="Highcharts"
+    style="width: 100%; height: 400px; display: block;">
+</highcharts-chart>
+<br/>
+
+<highcharts-chart
+    id="chart2"
+    [Highcharts]="Highcharts"
+    style="width: 100%; height: 400px; display: block;">
+</highcharts-chart>

@@ -5,10 +5,14 @@ import { AuthGuard } from './auth/auth.guard';
 import { InterceptorService } from './auth/interceptor.service';
 import { FundsComponent } from './funds/funds.component'
 import { RoiComponent } from './roi/roi.component'
+import { TfisComponent } from './tfis/tfis.component'
+import { TfismetaComponent } from './tfismeta/tfismeta.component'
 
 const routes: Routes = [
   { path: '', component: FundsComponent, canActivate: [AuthGuard] },
-  { path: 'roi', component: RoiComponent, canActivate: [AuthGuard] }
+  { path: 'roi', component: RoiComponent, canActivate: [AuthGuard] },
+  { path: 'tfi/:symbol', component: TfisComponent, canActivate: [AuthGuard] },
+  { path: 'tfi-meta', component: TfismetaComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

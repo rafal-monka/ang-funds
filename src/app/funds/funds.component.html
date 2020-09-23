@@ -1,18 +1,18 @@
+<button class="btn btn-warning btn-sm" (click)="refresh()">Reload</button>
+
 <div>
   <highcharts-chart
     id="chart"
     [Highcharts]="Highcharts"
-    style="width: 100%; height: 400px; display: block;">
+    style="width: 100%; height: 500px; display: block;">
   </highcharts-chart>
 </div>
 
-<!-- <pre>{{uniqueDates | json}}</pre>
-<pre>{{uniqueFunds | json}}</pre> -->
-<!-- <pre>{{pivotArr | json}}</pre> -->
+<br/>
 
 <table *ngIf="uniqueFunds && uniqueFunds && uniqueFunds.length>0 && uniqueFunds.length>0" class="table table-sm pivotTable" border=1>
     <thead>
-      <tr><th>Fund</th><th *ngFor="let udate of uniqueDates" nowrap>{{udate}}</th><th>Total</th></tr>
+      <tr><th>Fund</th><th *ngFor="let udate of uniqueDates" nowrap>{{udate}}</th><th>Total</th><th>Total (net)</th></tr>
     </thead>
     <tr *ngFor="let ufund of uniqueFunds; let r=index">
         <td nowrap><a target="_blank" href="{{getFundAolUrl(ufund)}}">{{ufund}}</a></td>
@@ -20,12 +20,14 @@
             <div *ngFor="let item of pivotArr[ufund][udate]" title="{{item.capital | number:'1.2-2'}}">{{item.interests | number: '1.2-2'}}</div>
         </td>
         <td class="valueCell">{{pivotArr[ufund]['SUM'] | number:'1.2-2'}}</td>
+        <td class="valueCell">{{pivotArr[ufund]['SUMNET'] | number:'1.2-2'}}</td>
         <!-- {{pivotArr[r][c]}} {{ufund}} {{udate}} !{{pivotArr[ufund][udate]}} -->
     </tr>
     <tr>
         <td class="valueCell">Total</td>
         <td *ngFor="let udate of uniqueDates; let c=index" class="valueCell">{{pivotArr['SUM'][udate] | number:'1.2-2'}}</td>
         <td class="valueCell">{{total | number:'1.2-2'}}</td>
+        <td class="valueCell">{{totalNet | number:'1.2-2'}}</td>
     </tr>
 </table>
 
@@ -37,6 +39,7 @@
     style="width: 100%; height: 300px; display: block;">
   </highcharts-chart>
 </div>
+
 
 <!-- <pre>{{monthlyArr | json}}</pre> -->
 

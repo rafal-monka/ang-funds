@@ -8,13 +8,18 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FundsComponent } from './funds/funds.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { RoiComponent } from './roi/roi.component';
+import { TfisComponent } from './tfis/tfis.component';
+import { TfismetaComponent } from './tfismeta/tfismeta.component';
+import { Utils } from './utils';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavBarComponent,
       FundsComponent,
-      RoiComponent
+      RoiComponent,
+      TfisComponent,
+      TfismetaComponent
    ],
    imports: [
       BrowserModule,
@@ -23,7 +28,7 @@ import { RoiComponent } from './roi/roi.component';
       FormsModule,
       HighchartsChartModule
    ],
-   providers: [],
+   providers: [ Utils ],
    bootstrap: [
       AppComponent
    ]

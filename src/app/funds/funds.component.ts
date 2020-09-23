@@ -29,28 +29,30 @@ export class FundsComponent implements OnInit {
   pivotArr: Array<any> = [[]]
   uniqueDates: Array<any>
   uniqueFunds: Array<any>
-  // funds$: Observable<any>
+
   funds: Array<any>
   dicts: Array<any>
-  //chartData : any[]
+
   Highcharts: typeof Highcharts = Highcharts
   HighchartsAKC: typeof Highcharts = Highcharts
+
   total: number = 0
+  totalNet: number = 0
 
   constructor(private api: ApiService) {}
 
   private setTable(investment, obs) {
       obs.map((item, index) => {
-          let cumWsp = Math.round( (item.value - obs[0].value)/obs[0].value * 100 * 100) / 100
-          let wsp = index>0 ? Math.round( (item.value - obs[index-1].value)/obs[index-1].value * 100 * 100) / 100: 0.0
+          let cumWsp =  (item.value - obs[0].value)/obs[0].value * 100
+          let wsp = index>0 ?  (item.value - obs[index-1].value)/obs[index-1].value * 100 : 0.0
           // return
           this.monthlyArr.push({
               ...item,
               capital: investment.capital,
-              cumPercent: cumWsp,
-              percent: wsp,
-              cumInterests: cumWsp>0 ? Math.round( CONST_TAX * cumWsp/100 * investment.capital * 100) / 100 : Math.round( cumWsp/100 * investment.capital * 100) / 100,
-              interests:  wsp>0 ? Math.round(CONST_TAX * wsp/100 * investment.capital * 100) / 100 : Math.round(wsp/100 * investment.capital * 100) / 100
+              cumPercent: Math.round(cumWsp * 100)/100,
+              percent: Math.round(wsp * 100)/100,
+              cumInterests: Math.round(cumWsp/100 * investment.capital * 100)/100,
+              interests:  Math.round(wsp/100 * investment.capital * 100)/100
           })
       })
       //this.monthlyArr.push(arr)
@@ -65,7 +67,7 @@ export class FundsComponent implements OnInit {
     this.uniqueDates = [...new Set(this.monthlyArr.sort( (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map(item => this.dateFormat(item.date)))]
     this.uniqueFunds = [...new Set(this.monthlyArr.sort( (a, b) => a.symbol >= b.symbol ? 1 : -1).map(item => item.symbol ))]
 
-console.log(this.uniqueDates)
+// console.log(this.uniqueDates)
 
     this.uniqueFunds.forEach((ufund, r) => {
         this.pivotArr[ufund] = []
@@ -75,6 +77,7 @@ console.log(this.uniqueDates)
             this.pivotArr['SUM'][udate] = 0.0
         })
         this.pivotArr[ufund]['SUM']= 0.0
+        this.pivotArr[ufund]['SUMNET']= 0.0
     })
 
     //totals
@@ -83,9 +86,18 @@ console.log(this.uniqueDates)
         this.pivotArr[item.symbol][this.dateFormat(item.date)].push(item)
         this.pivotArr['SUM'][this.dateFormat(item.date)] += item.interests
         this.pivotArr[item.symbol]['SUM'] += item.interests
+
         this.total += item.interests
     })
     // console.log('this.pivotArr', this.pivotArr)
+
+    //netto
+    this.totalNet = 0
+    this.uniqueFunds.forEach((ufund, r) => {
+        let interestsNet = this.pivotArr[ufund]['SUM'] * (this.pivotArr[ufund]['SUM'] > 0 ? CONST_TAX : 1)
+        this.pivotArr[ufund]['SUMNET'] = interestsNet
+        this.totalNet += interestsNet
+    })
   }
 
   private setChartOBL(series) {
@@ -104,7 +116,7 @@ console.log(this.uniqueDates)
           // }
       },
       legend: {
-          enabled: false
+          enabled: true
       },
       // tooltip: {
       //   formatter: function () {
@@ -197,6 +209,10 @@ console.log(this.uniqueDates)
       return this.dicts.filter(f => f.symbol===symbol)[0].aolurl
   }
 
+  refresh() {
+    this.api.perform$().subscribe()
+  }
+
   ngOnInit() {
       this.subscription = combineLatest(
           this.api.dicts$(),
@@ -236,6 +252,7 @@ console.log(this.uniqueDates)
   ngOnDestroy() {
       if (this.subscription) this.subscription.unsubscribe()
   }
+
 }
 
 
