@@ -16,6 +16,8 @@ import * as Highcharts from 'highcharts';
 // }
 
 const CONST_TAX = 0.81
+const CONST_ONE_DAY = 24*60*60*1000
+const CONST_ONE_YEAR = 365 * CONST_ONE_DAY
 
 @Component({
   selector: 'app-funds',
@@ -115,6 +117,7 @@ export class FundsComponent implements OnInit {
           //     format: '{value:%Y-%m-%d}'
           // }
       },
+
       legend: {
           enabled: true
       },
@@ -159,47 +162,65 @@ export class FundsComponent implements OnInit {
   })
   }
 
-  private processInvestment(investment) {
-      let obs = []
-      let lastObs
-      let arr = this.funds
-          .filter( fund => fund.symbol === investment.symbol && new Date(fund.date).getTime() >= new Date(investment.dateStart).getTime())
-          .sort( (a, b) => {
-              return new Date(a.date).getTime() - new Date(b.date).getTime()
-          })
-          .map((fund, index, array)=> {
-              //A. monthly table
-              //(1) choose obsevations dates
-              if (index === 0) {
-                  lastObs = fund
-                  obs.push(lastObs)
-              } else {
-// console.log('fund.date', fund.date, 'lastObs.date', lastObs.date)
-                  if (new Date(fund.date).getMonth() !== new Date(lastObs.date).getMonth() && new Date(lastObs.date).getTime() !== new Date(obs[obs.length-1].date).getTime()) {
-// console.log('push')
-                      obs.push(lastObs)
-                  }
-                  lastObs = fund
-                  if (index === array.length-1) {
-                      obs.push(fund)
-                  }
-              }
+  private fundColor(symbol) {
+      let color
+      switch (symbol) {
+          case 'NN-OBL': color = 'orange'; break;
+          case 'SAN-OBLP': color = 'green'; break;
+          case 'SAN-OBL': color = 'green'; break;
+          case 'PEK-OBL': color = 'red'; break;
+          case 'SKB-OBL': color = 'grey'; break;
+          default: 'lightgrey'
+      }
+      return color;
+  }
 
-              //B. percentage change
-              return [
-                  new Date(fund.date).getTime(),
-                  Math.round( (fund.value - array[0].value)/array[0].value * 100 * 100 ) / 100, //versus first (start date)
-                  // index===0 ? 0 : Math.round( (fund.value - arr[index-1].value)/arr[index-1].value * 100 * 100 ) / 100, //versus previous date
-                  fund.value
-              ]
-          })
+    private processInvestment(investment) {
+        let obs = []
+        let lastObs
+        let arr = this.funds
+            .filter( fund => fund.symbol === investment.symbol && new Date(fund.date).getTime() >= new Date(investment.dateStart).getTime() && (investment.dateEnd === null || investment.dateEnd === undefined))
+            .sort( (a, b) => {
+                return new Date(a.date).getTime() - new Date(b.date).getTime()
+            })
+            .map((fund, index, array)=> {
+                //A. monthly table
+                //(1) choose obsevations dates
+                if (index === 0) {
+                    lastObs = fund
+                    obs.push(lastObs)
+                } else {
+  // console.log('fund.date', fund.date, 'lastObs.date', lastObs.date)
+                    if (new Date(fund.date).getMonth() !== new Date(lastObs.date).getMonth() && new Date(lastObs.date).getTime() !== new Date(obs[obs.length-1].date).getTime()) {
+  // console.log('push')
+                        obs.push(lastObs)
+                    }
+                    lastObs = fund
+                    if (index === array.length-1) {
+                        obs.push(fund)
+                    }
+                }
 
-          //(2) calculate monthly table
-          //console.log('obs', investment.symbol, obs)
-          this.setTable(investment, obs)
+                //B. percentage change
+                return [
+                    new Date(fund.date).getTime(),
+                    Math.round( (fund.value - array[0].value)/array[0].value * 100 * 100 ) / 100, //versus first (start date)
+                    // index===0 ? 0 : Math.round( (fund.value - arr[index-1].value)/arr[index-1].value * 100 * 100 ) / 100, //versus previous date
+                    fund.value
+                ]
+            })
 
-      return {
-          name: investment.symbol,
+            //(2) calculate monthly table
+            //console.log('obs', investment.symbol, obs)
+            this.setTable(investment, obs)
+
+        return {
+            name: investment.symbol,
+            marker: {
+              enabled: false,
+              symbol: 'circle'
+            },
+            //color: this.fundColor(investment.symbol),
           data: arr
       }
   }
@@ -235,6 +256,11 @@ export class FundsComponent implements OnInit {
           investments.filter(inv => inv.type ==='OBL').forEach(inv => {
             chartDataOBL.push(this.processInvestment(inv))
           })
+
+          let chartDataLR = []
+          chartDataOBL.forEach(fundSeries => chartDataLR.push(this.fLR(fundSeries)))
+          chartDataLR.forEach(lr => chartDataOBL.push(lr))
+
           this.setChartOBL(chartDataOBL)
 
           // console.log('chartData', chartData)
@@ -253,6 +279,45 @@ export class FundsComponent implements OnInit {
       if (this.subscription) this.subscription.unsubscribe()
   }
 
+  fLR(series) {
+      // console.log(series)
+      let trendSeries
+      //series.forEach(item => {
+      let avg = {
+          x: Math.round(series.data.reduce((total, item) => total+item[0], 0) / series.data.length * 100) / 100,
+          y: Math.round(series.data.reduce((total, item) => total+item[1], 0) / series.data.length * 100) / 100
+      }
+      let sumCounter = series.data.reduce((total, item) => total + (item[0] - avg.x)*(item[1] - avg.y), 0)
+      let sumDenominator = series.data.reduce((total, item) => total + Math.pow( (item[0] - avg.x), 2), 0)
+      let a = sumCounter / sumDenominator
+      let lr = {
+          a: a,
+          b: avg.y - a * avg.x
+      }
+
+      trendSeries = {
+          name: 'LR-'+series.name+'/'+Math.round(lr.a*CONST_ONE_YEAR*100)/100+'%',
+          marker: {
+            enabled: false
+          },
+          color: 'lightgrey', //series.color
+          data: series.data.map(item => [
+              item[0],
+              Math.round( (lr.a * item[0] + lr.b)*100)/100
+          ])
+      }
+      return trendSeries
+
+          //difference between value and trend
+          // series.push({
+          //   name: 'DIFF-'+item.symbol,
+          //   data: item.data.map(item => [
+          //       item[0],
+          //       Math.round( 100* 100*(item[1] - (this.lr.a * item[0] + this.lr.b)) / item[1] ) / 100
+          //   ])
+          // })
+      //})
+    }
 }
 
 

@@ -18,10 +18,14 @@ export class TfisComponent implements OnInit {
   chart2: any
   tfimeta: Array<any>
   symbol: String
+  looks: any
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router, public utils: Utils) { }
 
-  private setChart(series, title) {
+  private setChart(series, title, tfiLooks) {
+    console.log('tfiLooks', tfiLooks)
+
+
     function afterSetExtremes(event) {
       Highcharts.charts[0].xAxis[0].setExtremes(event.min, event.max)
     }
@@ -32,7 +36,30 @@ export class TfisComponent implements OnInit {
       },
       chart: {
           zoomType: 'x',
-          type: 'line'
+          type: 'line',
+          events: {
+            load: function() {
+              var chart = this, points = chart.series[0].points
+
+              //let lookDate = tfiLook ? new Date(tfiLook.lookDate).getTime() : null
+
+              tfiLooks.forEach(tfiLook => {
+                  let lookPoint = []
+                  let lookDate = new Date(tfiLook.lookDate).getTime()
+                  lookPoint = points.filter( point => point.x === lookDate)
+                  console.log('lookPoint', lookPoint)
+                  if (lookPoint.length>0) {
+                      lookPoint[0].update({
+                          marker: {
+                            enabled: true,
+                            symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
+                          }
+                      })
+                  }
+
+              });
+            }
+          }
       },
       xAxis: {
           events: { afterSetExtremes: afterSetExtremes },
@@ -43,6 +70,10 @@ export class TfisComponent implements OnInit {
       },
       series: series
     })
+
+    //Highcharts.charts[1].series[0].addPoint([lookDate-5*24*60*60*1000, lookDate*tfiLook.lra+tfiLook.lrb])
+
+
   }
 
   private setChart2(series, title) {
@@ -100,7 +131,7 @@ export class TfisComponent implements OnInit {
       return diff
   }
 
-  setChartData(series, metadata) {
+  setChartData(series, metadata, tfiLooks) {
       let lr = this.addTrend(series[0].name, series[0].data, metadata.lra, metadata.lrb)
       if (lr != null) {
           series.push(lr)
@@ -115,16 +146,18 @@ export class TfisComponent implements OnInit {
 
           this.setChart2(series2, 'Difference[%] a='+this.utils.getLRAPercent(metadata.diff_lra)/*+', b='+(Math.round(metadata.diff_lrb*100)/100)*/+' (last '+metadata.CONST_LAST_PERIOD+')')
       }
-      this.setChart(series, 'Value [%] a='+this.utils.getLRAPercent(metadata.lra)/*+', b='+(Math.round(metadata.lrb*100)/100)*/+' (last '+metadata.CONST_LAST_PERIOD_VALUE+')')
+      this.setChart(series, 'Value [%] a='+this.utils.getLRAPercent(metadata.lra)/*+', b='+(Math.round(metadata.lrb*100)/100)*/+' (last '+metadata.CONST_LAST_PERIOD_VALUE+')', tfiLooks)
   }
 
   refreshData(symbol) {
     this.subscription = combineLatest(
         this.api.tfimeta$(symbol),
         this.api.tfivalues$(symbol),
-    ).subscribe(([tfimeta, tfivalues]) => {
+        this.api.tfilook$(symbol)
+    ).subscribe(([tfimeta, tfivalues, tfilooks]) => {
         this.tfimeta = tfimeta
         let metadata = tfimeta.filter(item => item.symbol === symbol)
+        this.looks = tfilooks
 
         //filter to given period
         tfivalues[0].data = tfivalues[0].data.filter((item, index) => {
@@ -139,7 +172,7 @@ export class TfisComponent implements OnInit {
             ]
         })
 
-        this.setChartData(tfivalues, metadata[0])
+        this.setChartData(tfivalues, metadata[0], tfilooks)
     })
   }
 

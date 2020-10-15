@@ -34,6 +34,10 @@ export class ApiService {
     return this.http.get(`/api/tfi/metadata/${symbol}`);
   }
 
+  tfilook$(symbol): Observable<any> {
+    return this.http.get(`/api/tfi/look/${symbol}`);
+  }
+
   tfiupdate$(symbol): Observable<any> {
     return this.http.get(`/api/tfi/run/${symbol}`);
   }
