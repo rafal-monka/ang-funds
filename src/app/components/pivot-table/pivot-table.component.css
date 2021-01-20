@@ -1,0 +1,17 @@
+.pivotTable {
+  font-size: 12px;
+  border: 1px solid grey;
+}
+.valueCell {
+  text-align: right;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+th {
+  background-color: lightgrey;
+}
+
+.pivotTableFooterRow {
+  background-color: lightgrey;
+  font-weight: bold;
+}

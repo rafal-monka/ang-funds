@@ -10,6 +10,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { RoiComponent } from './roi/roi.component';
 import { TfisComponent } from './tfis/tfis.component';
 import { TfismetaComponent } from './tfismeta/tfismeta.component';
+import { PivotTableComponent } from './components/pivot-table/pivot-table.component'
 import { Utils } from './utils';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { Utils } from './utils';
       FundsComponent,
       RoiComponent,
       TfisComponent,
-      TfismetaComponent
+      TfismetaComponent,
+      PivotTableComponent
    ],
    imports: [
       BrowserModule,

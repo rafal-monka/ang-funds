@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Observable, combineLatest, Subscription } from 'rxjs'
 import { ApiService } from '../api.service';
+
 import * as Highcharts from 'highcharts';
 
 // class Fund {
@@ -27,7 +28,8 @@ const CONST_ONE_YEAR = 365 * CONST_ONE_DAY
 export class FundsComponent implements OnInit {
 
   subscription: Subscription
-  monthlyArr: Array<any> = []
+  monthlyArrOBL: Array<any> = []
+  monthlyArrAKC: Array<any> = []
   pivotArr: Array<any> = [[]]
   uniqueDates: Array<any>
   uniqueFunds: Array<any>
@@ -41,14 +43,16 @@ export class FundsComponent implements OnInit {
   total: number = 0
   totalNet: number = 0
 
+  reloadButtonLabel = 'Reload'
+
   constructor(private api: ApiService) {}
 
-  private setTable(investment, obs) {
+  private setTable(investment, obs, monthlyArr) {
       obs.map((item, index) => {
           let cumWsp =  (item.value - obs[0].value)/obs[0].value * 100
           let wsp = index>0 ?  (item.value - obs[index-1].value)/obs[index-1].value * 100 : 0.0
           // return
-          this.monthlyArr.push({
+          /*this.*/monthlyArr.push({
               ...item,
               capital: investment.capital,
               cumPercent: Math.round(cumWsp * 100)/100,
@@ -65,9 +69,9 @@ export class FundsComponent implements OnInit {
     return new Date(date).toISOString().substring(0,10)
   }
 
-  private pivotTable() {
-    this.uniqueDates = [...new Set(this.monthlyArr.sort( (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map(item => this.dateFormat(item.date)))]
-    this.uniqueFunds = [...new Set(this.monthlyArr.sort( (a, b) => a.symbol >= b.symbol ? 1 : -1).map(item => item.symbol ))]
+  private pivotTable(monthlyArr) {
+    this.uniqueDates = [...new Set(/*this.*/monthlyArr.sort( (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map(item => this.dateFormat(item.date)))]
+    this.uniqueFunds = [...new Set(/*this.*/monthlyArr.sort( (a, b) => a.symbol >= b.symbol ? 1 : -1).map(item => item.symbol ))]
 
 // console.log(this.uniqueDates)
 
@@ -84,7 +88,7 @@ export class FundsComponent implements OnInit {
 
     //totals
     this.total = 0
-    this.monthlyArr.forEach(item=> {
+    /*this.*/monthlyArr.forEach(item=> {
         this.pivotArr[item.symbol][this.dateFormat(item.date)].push(item)
         this.pivotArr['SUM'][this.dateFormat(item.date)] += item.interests
         this.pivotArr[item.symbol]['SUM'] += item.interests
@@ -105,14 +109,19 @@ export class FundsComponent implements OnInit {
   private setChartOBL(series) {
     Highcharts.chart('chart', {
       title: {
-          text: 'Percentage change vs start date (BONDS)'
+          text: 'Bonds'
       },
       chart: {
           zoomType: 'x',
           type: 'line'
       },
+      yAxis: {
+        tickInterval: 0.5,
+      },
       xAxis: {
           type: 'datetime',
+          tickInterval: 24 * 3600 * 1000,
+          gridLineWidth: 1
           // labels: {
           //     format: '{value:%Y-%m-%d}'
           // }
@@ -140,23 +149,28 @@ export class FundsComponent implements OnInit {
       //   }
       // }]
       series: series
-  })
+    })
   }
 
   private setChartAKC(series) {
     Highcharts.chart('chartAKC', {
       title: {
-          text: 'Percentage change vs start date (SHARES)'
+          text: 'Shares'
       },
       chart: {
           zoomType: 'x',
           type: 'line'
       },
+      yAxis: {
+        tickInterval: 1.0,
+      },
       xAxis: {
           type: 'datetime',
+          tickInterval: 24 * 3600 * 1000,
+          gridLineWidth: 1
       },
       legend: {
-          enabled: false
+          enabled: true
       },
       series: series
   })
@@ -175,11 +189,11 @@ export class FundsComponent implements OnInit {
       return color;
   }
 
-    private processInvestment(investment) {
+  private processInvestment(investment, monthlyArr) {
         let obs = []
         let lastObs
         let arr = this.funds
-            .filter( fund => fund.symbol === investment.symbol && new Date(fund.date).getTime() >= new Date(investment.dateStart).getTime() && (investment.dateEnd === null || investment.dateEnd === undefined))
+            .filter( fund => fund.symbol === investment.symbol && new Date(fund.date).getTime() >= new Date(investment.dateStart).getTime() )
             .sort( (a, b) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime()
             })
@@ -211,8 +225,8 @@ export class FundsComponent implements OnInit {
             })
 
             //(2) calculate monthly table
-            //console.log('obs', investment.symbol, obs)
-            this.setTable(investment, obs)
+           //console.log('investment.symbol', investment.symbol)
+            this.setTable(investment, obs, monthlyArr)
 
         return {
             name: investment.symbol,
@@ -230,11 +244,36 @@ export class FundsComponent implements OnInit {
       return this.dicts.filter(f => f.symbol===symbol)[0].aolurl
   }
 
-  refresh() {
-    this.api.perform$().subscribe()
+  reload() {
+    this.reloadButtonLabel = 'Reloading...'
+    this.api.perform$().subscribe(val => {
+      setTimeout( () => this.reloadButtonLabel = 'Reload', 2000)
+    })
   }
 
   ngOnInit() {
+     this.api.fundsData$().subscribe(results => {
+
+      //bonds
+      this.dicts = results.dict
+      let chartDataOBL = results.chartDataOBL
+      this.setChartOBL(chartDataOBL)
+      this.monthlyArrOBL = results.monthlyArrOBL
+
+      //shares
+      let chartDataAKC = results.chartDataAKC
+      this.setChartAKC(chartDataAKC)
+      this.monthlyArrAKC = results.monthlyArrAKC
+     })
+
+
+      // setTimeout(
+      //   () => window.dispatchEvent(new Event('resize')),
+      //   150
+      // )
+
+  }
+  ngOnInitORY() {
       this.subscription = combineLatest(
           this.api.dicts$(),
           this.api.funds$(),
@@ -253,8 +292,8 @@ export class FundsComponent implements OnInit {
 
           //chart array
           let chartDataOBL = []
-          investments.filter(inv => inv.type ==='OBL').forEach(inv => {
-            chartDataOBL.push(this.processInvestment(inv))
+          investments.filter(inv => inv.type ==='OBL' && (inv.dateEnd === null || inv.dateEnd === undefined)).forEach(inv => {
+              chartDataOBL.push(this.processInvestment(inv, this.monthlyArrOBL))
           })
 
           let chartDataLR = []
@@ -264,14 +303,18 @@ export class FundsComponent implements OnInit {
           this.setChartOBL(chartDataOBL)
 
           // console.log('chartData', chartData)
-          this.pivotTable()
+          this.pivotTable(this.monthlyArrOBL)
 
           //chart array
           let chartDataAKC = []
-          investments.filter(inv => inv.type ==='AKC').forEach(inv => {
-            chartDataAKC.push(this.processInvestment(inv))
+          investments.filter(inv => inv.type ==='AKC' && (inv.dateEnd === null || inv.dateEnd === undefined)).forEach(inv => {
+            chartDataAKC.push(this.processInvestment(inv, this.monthlyArrAKC))
           })
           this.setChartAKC(chartDataAKC)
+          //this.pivotTable(this.monthlyArrAKC)
+
+          //https://stackoverflow.com/questions/16330237/highcharts-full-width-issue/36158314
+
       })
   }
 

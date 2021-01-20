@@ -1,3 +1,6 @@
+#panel {
+    margin: 2px
+}
 .pivotTable {
     font-size: 12px;
     border: 1px solid grey;
@@ -7,3 +10,19 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+#chartc {
+  width: 100% !important;
+}
+
+#chart {
+  width: 100% !important;
+}
+
+th {
+  background-color: lightgrey;
+}
+
+.tableFooterRow {
+  background-color: lightgrey;
+  font-weight: bold;
+}

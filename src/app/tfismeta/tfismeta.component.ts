@@ -111,6 +111,7 @@ export class TfismetaComponent implements OnInit {
       this.TFIs.map(tfi => (tfi.symbol==='TFI5142') ? console.log(tfi.symbol, tfi.metadata.initDate, CONST_ARCHEO_DATE): null)
       this.TFIs_filtered = this.TFIs.filter(tfi => this.filterInitialized && (tfi.metadata.initDate!==undefined && tfi.metadata.initDate!==null && new Date(tfi.metadata.initDate).getFullYear()!==CONST_ARCHEO_DATE.getFullYear()) || this.filterInitialized===false)
       this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterName !== '' && (tfi.name.toUpperCase().indexOf(filterNameUC) >-1 || tfi.symbol.toUpperCase().indexOf(filterNameUC) >-1) || this.filterName === '')
+      //###TODO
       this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterMyTFI && (['TFI6771','TFI8172','TFI5438','TFI1','TFI112','TFI4562','TFI66','TFI4635'].indexOf(tfi.symbol) >-1) || this.filterMyTFI===false)
       this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterLook && (tfi.metadata.look > 0) || this.filterLook===false)
 

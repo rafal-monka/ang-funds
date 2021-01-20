@@ -47,6 +47,10 @@ export class ApiService {
     return this.http.get('/perform')
   }
 
+  fundsData$(): Observable<any> {
+    return this.http.get(`/api/funds/data`);
+  }
+
   // tficalclr$(symbol): Observable<any> {
   //   return this.http.get(`/api/tfi/calclr/${symbol}`);
   // }
