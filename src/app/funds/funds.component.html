@@ -24,27 +24,6 @@
           [(monthlyArr)]="monthlyArrOBL">
         </app-pivot-table>
 
-        <!-- NORMAL TABLE
-        <table *ngIf="uniqueFunds && uniqueFunds.length>0" class="table table-sm pivotTable" border=1>
-          <thead>
-            <tr><th>Fund</th><th *ngFor="let udate of uniqueDates" nowrap>{{udate}}</th><th>Total</th><th>Total (net)</th></tr>
-          </thead>
-          <tr *ngFor="let ufund of uniqueFunds; let r=index">
-              <td nowrap><a target="_blank" href="{{getFundAolUrl(ufund)}}">{{ufund}}</a></td>
-              <td *ngFor="let udate of uniqueDates; let c=index" class="valueCell">
-                  <div *ngFor="let item of pivotArr[ufund][udate]" title="{{item.capital | number:'1.2-2'}}">{{item.interests | number: '1.2-2'}}</div>
-              </td>
-              <td class="valueCell">{{pivotArr[ufund]['SUM'] | number:'1.2-2'}}</td>
-              <td class="valueCell">{{pivotArr[ufund]['SUMNET'] | number:'1.2-2'}}</td>
-          </tr>
-          <tr class="tableFooterRow">
-              <td class="valueCell">Total</td>
-              <td *ngFor="let udate of uniqueDates; let c=index" class="valueCell">{{pivotArr['SUM'][udate] | number:'1.2-2'}}</td>
-              <td class="valueCell">{{total | number:'1.2-2'}}</td>
-              <td class="valueCell">{{totalNet | number:'1.2-2'}}</td>
-          </tr>
-        </table> -->
-
       </td>
     </tr>
 
@@ -79,7 +58,26 @@
 
 
 
-
+        <!-- NORMAL TABLE
+        <table *ngIf="uniqueFunds && uniqueFunds.length>0" class="table table-sm pivotTable" border=1>
+          <thead>
+            <tr><th>Fund</th><th *ngFor="let udate of uniqueDates" nowrap>{{udate}}</th><th>Total</th><th>Total (net)</th></tr>
+          </thead>
+          <tr *ngFor="let ufund of uniqueFunds; let r=index">
+              <td nowrap><a target="_blank" href="{{getFundAolUrl(ufund)}}">{{ufund}}</a></td>
+              <td *ngFor="let udate of uniqueDates; let c=index" class="valueCell">
+                  <div *ngFor="let item of pivotArr[ufund][udate]" title="{{item.capital | number:'1.2-2'}}">{{item.interests | number: '1.2-2'}}</div>
+              </td>
+              <td class="valueCell">{{pivotArr[ufund]['SUM'] | number:'1.2-2'}}</td>
+              <td class="valueCell">{{pivotArr[ufund]['SUMNET'] | number:'1.2-2'}}</td>
+          </tr>
+          <tr class="tableFooterRow">
+              <td class="valueCell">Total</td>
+              <td *ngFor="let udate of uniqueDates; let c=index" class="valueCell">{{pivotArr['SUM'][udate] | number:'1.2-2'}}</td>
+              <td class="valueCell">{{total | number:'1.2-2'}}</td>
+              <td class="valueCell">{{totalNet | number:'1.2-2'}}</td>
+          </tr>
+        </table> -->
 
 
 

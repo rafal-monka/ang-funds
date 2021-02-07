@@ -28,11 +28,12 @@
       </div>
 
       <div style="margin-left: 30px; font-size: 10px;">
-          Liczba funduszy: {{TFIs_filtered.length}}
+          Liczba funduszy: {{TFIs_filtered.length}} / {{getSelectedTFIs().length}}
           <table class="table table-xs">
               <thead>
                   <th>No</th>
                   <th><input type="checkbox" (change)="checkFilteredTFIChange()" [checked]="checkFilteredTFI" /></th>
+                  <th>DS</th>
                   <th>Symbol</th><th>Name</th>
                   <th>initDate</th><th>lastDate</th>
                   <th>LR</th>
@@ -49,8 +50,10 @@
                       <td>
                         <input type="checkbox" [value]="TFI.symbol" (change)="selectedTFIChange(TFI.symbol)" [checked]="selectedTFI[TFI.symbol]" />
                       </td>
+                      <td>{{TFI.metadata.source!==undefined?TFI.metadata.source:TFI.source}}</td>
                       <td><a target="_blank" href="/tfi/{{TFI.symbol}}">{{TFI.symbol}}</a></td>
-                      <td>{{TFI.name}}</td>
+                      <td><span *ngIf="TFI.metadata.source==='ANALIZY'"><a target="_blank" href="https://www.analizy.pl{{TFI.href}}">{{TFI.name}}</a></span>
+                        <span *ngIf="TFI.metadata.source!=='ANALIZY'">{{TFI.name}}</span></td>
                       <td>{{TFI.metadata.initDate | date}}</td>
                       <td>{{TFI.metadata.lastDate | date}}</td>
                       <td>

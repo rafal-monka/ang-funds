@@ -12,16 +12,18 @@ import { TfisComponent } from './tfis/tfis.component';
 import { TfismetaComponent } from './tfismeta/tfismeta.component';
 import { PivotTableComponent } from './components/pivot-table/pivot-table.component'
 import { Utils } from './utils';
+import { FundCompareComponent } from './fund-compare/fund-compare.component';
 
 @NgModule({
-   declarations: [
+   declarations: [	
       AppComponent,
       NavBarComponent,
       FundsComponent,
       RoiComponent,
       TfisComponent,
       TfismetaComponent,
-      PivotTableComponent
+      PivotTableComponent,
+      FundCompareComponent
    ],
    imports: [
       BrowserModule,

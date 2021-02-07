@@ -51,6 +51,9 @@ export class ApiService {
     return this.http.get(`/api/funds/data`);
   }
 
+  cbondsData$(date): Observable<any> {
+    return this.http.get(`/api/cbonds/calculate/${date}`);
+  }
   // tficalclr$(symbol): Observable<any> {
   //   return this.http.get(`/api/tfi/calclr/${symbol}`);
   // }

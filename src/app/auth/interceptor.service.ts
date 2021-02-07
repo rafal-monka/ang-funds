@@ -22,7 +22,7 @@ export class InterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     let x: Observable<HttpEvent<any>>
     //@@@AUTH0
-    if (false) return next.handle(req);
+    if (true) return next.handle(req);
 
     return this.auth.getTokenSilently$().pipe(
       mergeMap(token => {

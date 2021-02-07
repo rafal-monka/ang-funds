@@ -7,12 +7,14 @@ import { FundsComponent } from './funds/funds.component'
 import { RoiComponent } from './roi/roi.component'
 import { TfisComponent } from './tfis/tfis.component'
 import { TfismetaComponent } from './tfismeta/tfismeta.component'
+import { FundCompareComponent } from './fund-compare/fund-compare.component'
 
 const routes: Routes = [
-  { path: '', component: FundsComponent, canActivate: [AuthGuard] },
+  { path: '', component: FundsComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'roi', component: RoiComponent, canActivate: [AuthGuard] },
   { path: 'tfi/:symbol', component: TfisComponent, canActivate: [AuthGuard] },
-  { path: 'tfi-meta', component: TfismetaComponent, canActivate: [AuthGuard] }
+  { path: 'tfi-meta', component: TfismetaComponent, canActivate: [AuthGuard] },
+  { path: 'compare/:symbols/:date', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ }
 ];
 
 @NgModule({
