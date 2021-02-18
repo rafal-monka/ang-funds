@@ -84,7 +84,7 @@ export class PivotTableComponent implements OnInit {
           //https://stackoverflow.com/questions/16330237/highcharts-full-width-issue/36158314
           window.dispatchEvent(new Event('resize'))
 
-        }, 100)
+        }, 50)
     }
 
   }

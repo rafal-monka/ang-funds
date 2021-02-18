@@ -28,13 +28,26 @@
     </tr>
 
     <tr>
+
+        <td>
+          <app-table-lo
+            [fundsLO]="fundsLOValuesOBL"
+            [chartID]="'chartLO_OBL'"
+            [highChart]="HighchartsLO_OBL"></app-table-lo>
+
+          <!-- <app-pivot-table-lo [arr]="fundsLOValuesOBL"></app-pivot-table-lo> -->
+
+        </td>
+    </tr>
+
+    <tr>
       <td>
 
         <div>
           <highcharts-chart
             id="chartAKC"
             [Highcharts]="HighchartsAKC"
-            style="height: 350px; display: block; border: 1px solid lightgrey">
+            style="height: 450px; display: block; border: 1px solid lightgrey">
           </highcharts-chart>
         </div>
 
@@ -50,10 +63,48 @@
       </td>
     </tr>
 
+    <tr>
+        <td>
+            <app-table-lo
+              [fundsLO]="fundsLOValuesAKC"
+              [chartID]="'chartLO_AKC'"
+              [highChart]="HighchartsLO_AKC"></app-table-lo>
+            <!-- <ul>
+              <li *ngFor="let fund of fundsLOValuesAKC">{{fund.name}} - {{fund.data[0][2]}} / {{fund.lo}} </li>
+            </ul>
+            <div>
+                <highcharts-chart
+                  id="chartLO_AKC"
+                  [Highcharts]="HighchartsLO_AKC"
+                  style="width: 60%; display: block; border: 1px solid lightgrey">
+                </highcharts-chart>
+            </div> -->
+        </td>
+    </tr>
+
+    <tr>
+      <td>
+        <br><br><br>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+
+        <div>
+          <highcharts-chart
+            id="chartTS"
+            [Highcharts]="HighchartsTS"
+            style="height: 500px; display: block; border: 1px solid lightgrey">
+          </highcharts-chart>
+        </div>
+
+      </td>
+    </tr>
+
   </table>
 
   <br/>
-
 </div>
 
 

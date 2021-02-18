@@ -1,0 +1,19 @@
+<div class="divlo">
+  <pre>Line of defence</pre>
+  <div class="wrapper">
+    <div class="left">
+      <ul>
+        <li *ngFor="let fund of fundsLO">{{fund.name}} - {{fund.data[0][2]}} / {{fund.lo}} / {{fund.data[fund.data.length-1][2]}}</li>
+      </ul>
+    </div>
+    <div class="right">
+      <div>
+        <highcharts-chart
+          id="{{chartID}}"
+          [Highcharts]="highChart"
+          style="display: block; border: 1px solid lightgrey">
+        </highcharts-chart>
+      </div>
+    </div>
+  </div>
+</div>

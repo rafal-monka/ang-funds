@@ -1,0 +1,14 @@
+<table class="pivottable" *ngIf="ready" class="table table-sm pivotTable" border=1>
+  <thead>
+    <tr><th></th><th>Val</th><th>LO</th><th *ngFor="let uCol of uniqueCols; let c=index" nowrap>{{uCol}}</th></tr>
+  </thead>
+  <tr *ngFor="let uRow of uniqueRows; let r=index">
+    <td>{{uRow}}</td>
+    <td class="cell">{{pivotArr[uRow][uniqueCols[0]][0].value}}</td>
+    <td class="cell">{{pivotArr[uRow][uniqueCols[0]][0].lo}}</td>
+    <td class="cell" *ngFor="let uCol of uniqueCols"><div *ngFor="let item of pivotArr[uRow][uCol]"><span style="color: {{item.warningColor}}">{{item.change}}</span></div></td>
+  </tr>
+</table>
+<!-- <pre>{{uniqueCols | json}}</pre>
+<pre>{{uniqueRows | json}}</pre>
+<pre>{{arr | json}}</pre> -->

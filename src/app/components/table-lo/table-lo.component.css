@@ -1,0 +1,15 @@
+.divlo {
+    background-color: whitesmoke;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.left {
+  flex: 0 0 40%;
+}
+
+.right {
+  flex: 1;
+}

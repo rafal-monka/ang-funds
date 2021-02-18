@@ -16,12 +16,19 @@ export class FundsComponent implements OnInit {
   pivotArr: Array<any> = [[]]
   uniqueDates: Array<any>
   uniqueFunds: Array<any>
+  fundsLOValuesAKC: Array<any>
+  fundsLOValuesOBL: Array<any>
+
+  trailingStop: Array<any> = [] //###temp
 
   funds: Array<any>
   dicts: Array<any>
 
   Highcharts: typeof Highcharts = Highcharts
   HighchartsAKC: typeof Highcharts = Highcharts
+  HighchartsTS: typeof Highcharts = Highcharts
+  HighchartsLO_OBL: typeof Highcharts = Highcharts
+  HighchartsLO_AKC: typeof Highcharts = Highcharts
 
   total: number = 0
   totalNet: number = 0
@@ -31,10 +38,41 @@ export class FundsComponent implements OnInit {
 
   constructor(private api: ApiService) {}
 
-  private setChartOBL(series) {
-    Highcharts.chart('chart', {
+  private setChartLO(id, title, series, yAxisTickInterval) {
+    Highcharts.chart(id, {
       title: {
-          text: 'Bonds'
+          text: title
+      },
+      chart: {
+          height: '30%',
+          zoomType: 'x',
+          type: 'line'
+      },
+      yAxis: [{
+        tickInterval: yAxisTickInterval,
+        alternateGridColor: 'rgb(250,250,250)'
+      },
+      {
+        linkedTo: 0,
+        opposite: true
+      }],
+      xAxis: {
+          type: 'datetime',
+          tickInterval: 1 * 24 * 3600 * 1000,
+          gridLineWidth: 1
+      },
+      legend: {
+          enabled: true
+      },
+      series: series
+    })
+  }
+
+
+  private setChartTS(series) {
+    Highcharts.chart('chartTS', {
+      title: {
+          text: 'Trailing stop'
       },
       chart: {
           zoomType: 'x',
@@ -45,8 +83,38 @@ export class FundsComponent implements OnInit {
       },
       xAxis: {
           type: 'datetime',
-          tickInterval: 24 * 3600 * 1000,
+          tickInterval: 30 * 24 * 3600 * 1000,
           gridLineWidth: 1
+      },
+      legend: {
+          enabled: true
+      },
+      series: series
+    })
+  }
+
+  private setChartOBL(series) {
+    Highcharts.chart('chart', {
+      title: {
+          text: 'Bonds'
+      },
+      chart: {
+          zoomType: 'x',
+          type: 'line'
+      },
+      yAxis: [{
+        tickInterval: 0.5,
+        alternateGridColor: 'rgb(250,250,250)'
+      },
+      {
+        linkedTo: 0,
+        opposite: true
+      }],
+      xAxis: {
+          type: 'datetime',
+          tickInterval: 30 * 24 * 3600 * 1000,
+          gridLineWidth: 1,
+          //alternateGridColor: 'rgb(250,250,250)'
           // labels: {
           //     format: '{value:%Y-%m-%d}'
           // }
@@ -86,12 +154,17 @@ export class FundsComponent implements OnInit {
           zoomType: 'x',
           type: 'line'
       },
-      yAxis: {
+      yAxis: [{
         tickInterval: 1.0,
+        alternateGridColor: 'rgb(250,250,250)'
       },
+      {
+        linkedTo: 0,
+        opposite: true
+      }],
       xAxis: {
           type: 'datetime',
-          tickInterval: 24 * 3600 * 1000,
+          tickInterval: 30 * 24 * 3600 * 1000,
           gridLineWidth: 1
       },
       legend: {
@@ -120,6 +193,9 @@ export class FundsComponent implements OnInit {
         //bonds
         this.dicts = results.dict
         let chartDataOBL = results.chartDataOBL
+
+        //console.log('chartDataOBL', chartDataOBL)
+
         this.setChartOBL(chartDataOBL)
         this.monthlyArrOBL = results.monthlyArrOBL
 
@@ -127,11 +203,23 @@ export class FundsComponent implements OnInit {
         let chartDataAKC = results.chartDataAKC
         this.setChartAKC(chartDataAKC)
         this.monthlyArrAKC = results.monthlyArrAKC
+
+        //trailing stop
+        this.setChartTS(results.trailingStop)
+//this.trailingStop = results.trailingStop
+        //console.log(results.fundsLastMonth)
+        this.fundsLOValuesOBL = results.fundsLOValuesOBL//fundsLOValues.filter(el => el.type === 'OBL')
+        this.fundsLOValuesAKC = results.fundsLOValuesAKC//fundsLOValues.filter(el => el.type === 'AKC')
+
+        this.setChartLO('chartLO_OBL', 'Bonds -2%', this.fundsLOValuesOBL, 0.25)
+        this.setChartLO('chartLO_AKC', 'Stocks -7%', this.fundsLOValuesAKC, 1.0)
+
+        // setTimeout(
+        //   () => window.dispatchEvent(new Event('resize')),
+        //   150
+        // )
+
       })
-      // setTimeout(
-      //   () => window.dispatchEvent(new Event('resize')),
-      //   150
-      // )
   }
 
 }

@@ -11,11 +11,13 @@ import { RoiComponent } from './roi/roi.component';
 import { TfisComponent } from './tfis/tfis.component';
 import { TfismetaComponent } from './tfismeta/tfismeta.component';
 import { PivotTableComponent } from './components/pivot-table/pivot-table.component'
+import { PivotTableLoComponent } from './components/pivot-table-lo/pivot-table-lo.component'
+import { TableLoComponent } from './components/table-lo/table-lo.component'
 import { Utils } from './utils';
 import { FundCompareComponent } from './fund-compare/fund-compare.component';
 
 @NgModule({
-   declarations: [	
+   declarations: [
       AppComponent,
       NavBarComponent,
       FundsComponent,
@@ -23,6 +25,8 @@ import { FundCompareComponent } from './fund-compare/fund-compare.component';
       TfisComponent,
       TfismetaComponent,
       PivotTableComponent,
+      PivotTableLoComponent,
+      TableLoComponent,
       FundCompareComponent
    ],
    imports: [

@@ -34,12 +34,19 @@
                   <th>No</th>
                   <th><input type="checkbox" (change)="checkFilteredTFIChange()" [checked]="checkFilteredTFI" /></th>
                   <th>DS</th>
-                  <th>Symbol</th><th>Name</th>
-                  <th>initDate</th><th>lastDate</th>
-                  <th>LR</th>
-                  <th>%</th>
+                  <th>Symbol</th>
+                  <th>Type</th>
+                  <th>FIO</th>
+                  <th>Name</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Value LR params</th>
+                  <th>Value LR%</th>
+                  <th>Diff</th>
+                  <th>Diff LR%</th>
+                  <th>?</th>
                   <th>Status</th>
-                  <th>frameDateFrom</th><th>frameDateTo</th><th>dir</th>
+                  <!-- <th>frameDateFrom</th><th>frameDateTo</th><th>dir</th> -->
                   <th>Info</th>
                   <th>Actions</th>
                   <th>Updated</th>
@@ -52,8 +59,13 @@
                       </td>
                       <td>{{TFI.metadata.source!==undefined?TFI.metadata.source:TFI.source}}</td>
                       <td><a target="_blank" href="/tfi/{{TFI.symbol}}">{{TFI.symbol}}</a></td>
-                      <td><span *ngIf="TFI.metadata.source==='ANALIZY'"><a target="_blank" href="https://www.analizy.pl{{TFI.href}}">{{TFI.name}}</a></span>
-                        <span *ngIf="TFI.metadata.source!=='ANALIZY'">{{TFI.name}}</span></td>
+                      <td>{{TFI.type}}</td>
+                      <td>{{TFI.firm}}</td>
+                      <td>
+                        <span *ngIf="TFI.metadata.source==='ANALIZY'"><a target="_blank" href="https://www.analizy.pl{{TFI.href}}">{{TFI.name}}</a></span>
+                        <span *ngIf="TFI.metadata.source!=='ANALIZY'">{{TFI.name}}</span>
+                        <br>{{TFI.info}}
+                      </td>
                       <td>{{TFI.metadata.initDate | date}}</td>
                       <td>{{TFI.metadata.lastDate | date}}</td>
                       <td>
@@ -64,16 +76,16 @@
                       </td>
                       <td nowrap>
                           {{utils.getLRAPercent(TFI.metadata.lra)}}%
-                          <br/>
-                          {{TFI.metadata.lastDiff}} [{{TFI.metadata.lastDiffPercent}}%]
-                          <br/>
-                          {{utils.getLRAPercent(TFI.metadata.diff_lra)}}%
-                          <br/>LOOK={{TFI.metadata.look}}
                       </td>
+                      <td>
+                          {{TFI.metadata.lastDiff}} [{{TFI.metadata.lastDiffPercent}}%]
+                      </td>
+                      <td>{{utils.getLRAPercent(TFI.metadata.diff_lra)}}%</td>
+                      <td>{{TFI.metadata.look}}</td>
                       <td><img src="{{getImgStatus(TFI.metadata.status)}}" width="32" height="32"></td>
-                      <td>{{TFI.metadata.frameDateFrom | date}}</td>
+                      <!-- <td>{{TFI.metadata.frameDateFrom | date}}</td>
                       <td>{{TFI.metadata.frameDateTo | date}}</td>
-                      <td>{{TFI.metadata.direction}}</td>
+                      <td>{{TFI.metadata.direction}}</td> -->
                       <td>{{TFI.metadata.errorMsg}}</td>
                       <td nowrap>
                         <button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-primary" (click)="loadValueTFI(TFI.symbol)">Update</button>
