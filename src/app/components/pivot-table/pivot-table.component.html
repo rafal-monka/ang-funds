@@ -1,4 +1,4 @@
-<table *ngIf="uniqueFunds && uniqueFunds.length>0" class="table table-sm pivotTable" border=1>
+<table class="" *ngIf="uniqueFunds && uniqueFunds.length>0" class="table table-sm pivotTable table-striped" border=1>
   <thead>
     <tr><th>Fund</th><th *ngFor="let udate of uniqueDates" nowrap>{{udate}}</th><th>Total</th><th>Total (net)</th></tr>
   </thead>

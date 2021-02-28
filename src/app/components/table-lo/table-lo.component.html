@@ -1,11 +1,42 @@
 <div class="divlo">
   <pre>Line of defence</pre>
   <div class="wrapper">
+
     <div class="left">
-      <ul>
-        <li *ngFor="let fund of fundsLO">{{fund.name}} - {{fund.data[0][2]}} / {{fund.lo}} / {{fund.data[fund.data.length-1][2]}}</li>
-      </ul>
+        <table class="table table-sm table-striped">
+            <tr *ngFor="let fund of fundsLO">
+                <td>{{fund.name}}</td>
+                <!-- <td>prevMonth={{fund.valLastDayOfPrevMonth}} / LO={{fund.valLO}} / Cur={{fund.valCurrent}}</td>
+                <td>minQ={{fund.minMaxLastQ[0]}} - maxQ={{fund.minMaxLastQ[1]}}, valMin={{fund.valMin}}</td> -->
+                <td>
+                    <svg viewBox="0 0 340 36" width="100%" height="36" style="font-size: 10;">
+
+                        <rect x="5" y="20" width="300" height="1" fill="grey" />
+
+                        <rect [attr.x]="fund.valScaled.min+5" y="15" width="1" height="10" fill="grey" />
+                        <rect [attr.x]="fund.valScaled.max+5" y="15" width="1" height="10" fill="grey" />
+                        <!-- <polygon [attr.points]="200,10 250,190 160,210" style="fill:lime;stroke:purple;stroke-width:1" /> -->
+                        <g>
+                          <circle [attr.cx]="fund.valScaled.current+5" cy="16" r="4" [attr.fill]="fund.currentValueColor" />
+                          <text [attr.class]="'textlabel'" [attr.x]="fund.valScaled.current" y="11" [attr.fill]="fund.currentValueColor">{{fund.valCurrent}}</text>
+                        </g>
+
+                        <g>
+                          <circle [attr.cx]="fund.valScaled.lastPrevMonth+5" cy="25" r="3" fill="grey" />
+                          <text [attr.x]="fund.valScaled.lastPrevMonth" y="36" fill="grey">{{fund.valLastDayOfPrevMonth}}</text>
+                        </g>
+
+                        <g>
+                          <circle [attr.cx]="fund.valScaled.lo+5" cy="25" r="3" fill="blue" />
+                          <text [attr.x]="fund.valScaled.lo" y="36" fill="blue">{{fund.valLO}}</text>
+                        </g>
+
+                    </svg>
+                </td>
+            </tr>
+        </table>
     </div>
+
     <div class="right">
       <div>
         <highcharts-chart

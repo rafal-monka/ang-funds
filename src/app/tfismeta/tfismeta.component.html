@@ -5,7 +5,7 @@
           <button class="btn btn-warning btn-sm" *ngIf="wssIsActive" (click)="disconnectWss()">Disconnect</button>
 
           &nbsp;
-          <input [(ngModel)]="filterName" placeholder="Filter by TFI name or symbol" size="30" (change)="refresh()">
+          <input [(ngModel)]="filterName" placeholder="Filter by TFI name or symbol(s)" size="40" (change)="refresh()">
 
           &nbsp;
           <label>My Funds
@@ -23,20 +23,23 @@
           </label>
 
           &nbsp;
-          <button class="btn btn-sm btn-primary" (click)="loadValueTFI('')">Update selected</button>
-          &nbsp;<button class="btn btn-sm btn-success" (click)="calcLR('')">CalcLR selected</button>
+          <button class="btn btn-sm btn-primary" (click)="loadValueTFI('')">Update</button>
+          &nbsp;<button class="btn btn-sm btn-success" (click)="calcLR('')">CalcLR</button>
+          &nbsp;<button class="btn btn-sm btn-warning" (click)="calcStats('')">Stats</button>
+
+          &nbsp;
+          <input [(ngModel)]="compareDate" placeholder="Date to compare" size="10" (change)="compare()">
+          &nbsp;<button class="btn btn-sm btn-info" (click)="compare()">Compare</button>
+          &nbsp;<button class="btn btn-sm btn-info" (click)="ampl()">Ampl</button>
       </div>
 
-      <div style="margin-left: 30px; font-size: 10px;">
-          Liczba funduszy: {{TFIs_filtered.length}} / {{getSelectedTFIs().length}}
-          <table class="table table-xs">
+      <div style="margin-left: 2px; font-size: 10px;">
+          Liczba funduszy: {{TFIs_filtered.length}} / {{getSelectedTFIs().length}} [{{countRecordsProcessed}} z {{countRecordsToProcess}}]
+          <table class="table table-sm">
               <thead>
                   <th>No</th>
                   <th><input type="checkbox" (change)="checkFilteredTFIChange()" [checked]="checkFilteredTFI" /></th>
-                  <th>DS</th>
-                  <th>Symbol</th>
-                  <th>Type</th>
-                  <th>FIO</th>
+                  <th nowrap>Symbol</th>
                   <th>Name</th>
                   <th>From</th>
                   <th>To</th>
@@ -49,6 +52,7 @@
                   <!-- <th>frameDateFrom</th><th>frameDateTo</th><th>dir</th> -->
                   <th>Info</th>
                   <th>Actions</th>
+                  <th></th>
                   <th>Updated</th>
               </thead>
               <tbody>
@@ -57,21 +61,22 @@
                       <td>
                         <input type="checkbox" [value]="TFI.symbol" (change)="selectedTFIChange(TFI.symbol)" [checked]="selectedTFI[TFI.symbol]" />
                       </td>
-                      <td>{{TFI.metadata.source!==undefined?TFI.metadata.source:TFI.source}}</td>
-                      <td><a target="_blank" href="/tfi/{{TFI.symbol}}">{{TFI.symbol}}</a></td>
-                      <td>{{TFI.type}}</td>
-                      <td>{{TFI.firm}}</td>
+                      <td>
+                        <a target="_blank" href="/tfi/{{TFI.symbol}}">{{TFI.symbol}}</a>
+                        <br>{{TFI.firm}}
+                        <br>[{{TFI.metadata.source!==undefined?TFI.metadata.source:TFI.source}}]
+                      </td>
                       <td>
                         <span *ngIf="TFI.metadata.source==='ANALIZY'"><a target="_blank" href="https://www.analizy.pl{{TFI.href}}">{{TFI.name}}</a></span>
                         <span *ngIf="TFI.metadata.source!=='ANALIZY'">{{TFI.name}}</span>
-                        <br>{{TFI.info}}
+                        <br>{{TFI.type}} - {{TFI.info}}
                       </td>
                       <td>{{TFI.metadata.initDate | date}}</td>
                       <td>{{TFI.metadata.lastDate | date}}</td>
                       <td>
-                          LR a={{TFI.metadata.lra}}, b={{TFI.metadata.lrb | number : '1.2-2'}}
+                          LR a={{TFI.metadata.lra | number : '1.2-2'}}, b={{TFI.metadata.lrb | number : '1.2-2'}}
                           <!-- <br/>LastDiff={{TFI.metadata.lastDiff}} lastDiffPercent={{TFI.metadata.lastDiffPercent}}% -->
-                          <br/>diffLR a={{TFI.metadata.diff_lra}}, b={{TFI.metadata.diff_lrb | number : '1.2-2'}}
+                          <br/>diffLR a={{TFI.metadata.diff_lra | number : '1.2-2'}}, b={{TFI.metadata.diff_lrb | number : '1.2-2'}}
                           <br/>{{TFI.metadata.CONST_LAST_PERIOD}}
                       </td>
                       <td nowrap>
@@ -82,14 +87,22 @@
                       </td>
                       <td>{{utils.getLRAPercent(TFI.metadata.diff_lra)}}%</td>
                       <td>{{TFI.metadata.look}}</td>
-                      <td><img src="{{getImgStatus(TFI.metadata.status)}}" width="32" height="32"></td>
-                      <!-- <td>{{TFI.metadata.frameDateFrom | date}}</td>
-                      <td>{{TFI.metadata.frameDateTo | date}}</td>
-                      <td>{{TFI.metadata.direction}}</td> -->
+                      <td><img src="{{getImgStatus(TFI.metadata.status)}}" width="20" height="20"></td>
+
                       <td>{{TFI.metadata.errorMsg}}</td>
                       <td nowrap>
-                        <button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-primary" (click)="loadValueTFI(TFI.symbol)">Update</button>
-                        &nbsp;<button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-success" (click)="calcLR(TFI.symbol)">CalcLR</button>
+                        <button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-primary" (click)="loadValueTFI(TFI.symbol)">U</button>
+                        &nbsp;<button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-success" (click)="calcLR(TFI.symbol)">C</button>
+                        &nbsp;<button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-warning" (click)="calcStats(TFI.symbol)">S</button>
+                      </td>
+                      <td>
+                        <svg width="100" height="45" style="border: 1px solid grey">
+                          <polyline
+                          fill="none"
+                          stroke="#0074d9"
+                          stroke-width="1"
+                          [attr.points]="'0,0 20,20 30,10 40,15'"/>
+                        </svg>
                       </td>
                       <td>{{TFI.metadata.updated_at}}</td>
                   </tr>

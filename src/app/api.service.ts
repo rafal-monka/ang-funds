@@ -30,6 +30,10 @@ export class ApiService {
     return this.http.get(`/api/tfi/values/${symbol}`);
   }
 
+  tfimonthly$(symbols, date, period): Observable<any> {
+    return this.http.get(`/api/calculate/monthly/values/${symbols}/${date}/${period}`);
+  }
+
   tfimeta$(symbol): Observable<any> {
     return this.http.get(`/api/tfi/metadata/${symbol}`);
   }

@@ -1,0 +1,22 @@
+MONTHLY
+<br/><input [(ngModel)]="filterSymbols" placeholder="Symbol(s)..." size="100" (change)="refresh()">
+
+<!-- <ol>
+  <li *ngFor="let tfimeta of tfimetadata">{{tfimeta.symbol}} {{tfimeta.name}}</li>
+</ol> -->
+
+<!-- <br/><b *ngIf="tfimeta2">{{tfimeta2[0].symbol}} {{tfimeta2[0].name}}</b> -->
+<br/><input [(ngModel)]="filterDate" placeholder="Filter from Date" size="10" (change)="refresh()">
+
+<highcharts-chart
+    id="chart"
+    [Highcharts]="Highcharts"
+    style="width: 100%; height: 600px; display: block;">
+</highcharts-chart>
+
+<div>
+   <ul>
+      <li *ngFor="let fund of tfimonthly">{{fund.name}} {{fund.statData | json}}</li>
+   </ul>
+</div>
+<br/>

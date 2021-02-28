@@ -4,9 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FundsComponent } from './funds/funds.component';
-import { HighchartsChartModule } from 'highcharts-angular';
 import { RoiComponent } from './roi/roi.component';
 import { TfisComponent } from './tfis/tfis.component';
 import { TfismetaComponent } from './tfismeta/tfismeta.component';
@@ -15,6 +15,7 @@ import { PivotTableLoComponent } from './components/pivot-table-lo/pivot-table-l
 import { TableLoComponent } from './components/table-lo/table-lo.component'
 import { Utils } from './utils';
 import { FundCompareComponent } from './fund-compare/fund-compare.component';
+import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component';
 
 @NgModule({
    declarations: [
@@ -27,7 +28,8 @@ import { FundCompareComponent } from './fund-compare/fund-compare.component';
       PivotTableComponent,
       PivotTableLoComponent,
       TableLoComponent,
-      FundCompareComponent
+      FundCompareComponent,
+      FundMonthlyComponent
    ],
    imports: [
       BrowserModule,

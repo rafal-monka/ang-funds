@@ -51,6 +51,13 @@ export class FundCompareComponent implements OnInit {
       xAxis: {
           type: 'datetime',
       },
+      yAxis: [{
+        alternateGridColor: 'rgb(250,250,250)'
+      },
+      {
+        linkedTo: 0,
+        opposite: true
+      }],
       legend: {
           enabled: true
       },
