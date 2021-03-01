@@ -1,11 +1,12 @@
-<br/><input [(ngModel)]="filterSymbols" placeholder="Symbol(s)..." size="100" (change)="refresh()">
+<br/><input [(ngModel)]="filterSymbols" placeholder="Symbol(s)..." size="100">
 
 <!-- <ol>
   <li *ngFor="let tfimeta of tfimetadata">{{tfimeta.symbol}} {{tfimeta.name}}</li>
 </ol> -->
 
 <!-- <br/><b *ngIf="tfimeta2">{{tfimeta2[0].symbol}} {{tfimeta2[0].name}}</b> -->
-<br/><input [(ngModel)]="filterDate" placeholder="Filter from Date" size="10" (change)="refresh()">
+<input [(ngModel)]="filterDate" placeholder="Filter from Date" size="10">
+<button class="btn btn-sm btn-info" (click)="refresh()">Refresh</button>
 
 <highcharts-chart
     id="chart"

@@ -39,6 +39,8 @@ export class FundMonthlyComponent implements OnInit {
 
   private setChart(series, period) {
     //console.log('setChart', title)
+
+
     Highcharts.chart('chart', {
       title: {
           text: 'By '+period
@@ -59,15 +61,19 @@ export class FundMonthlyComponent implements OnInit {
           type: "datetime",
           labels: {
             formatter: function() {
-              return Highcharts.dateFormat('%Y %b', this.value);
+              let format = (period === 'D' ? '%Y %b %e' : '%Y %b')
+              return Highcharts.dateFormat(format, this.value) //https://api.highcharts.com/class-reference/Highcharts.Time
             }
           },
           startOnTick: true, //https://www.highcharts.com/forum/viewtopic.php?t=40059
+
           endOnTick: true,
           // tickPositioner: ,
-          // minorTickPosition: 'outside',
-          // startOnTick: false,
-          alternateGridColor: 'rgb(250,250,250)',
+          tickPosition: 'inside',
+          minPadding:0.05,
+          maxPadding:0.05,
+          //offset: 40,
+          alternateGridColor: 'rgb(240,240,240)',
           //gridLineWidth: 1
       },
       legend: {
@@ -76,7 +82,7 @@ export class FundMonthlyComponent implements OnInit {
       tooltip: {
         formatter: function () {
           const Y = this.y
-          const X = new Date(this.x).toISOString().substring(0,7)
+          const X = new Date(this.x).toISOString().substring(0, (period === 'D' ? 10: 7))
           const name = this.point.series.name
           return `${name} [${X}] ${Y}%`
         }
