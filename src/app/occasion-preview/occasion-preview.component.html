@@ -1,0 +1,28 @@
+<div class="float-container">
+
+  <div class="left-col">
+    <!-- <pre>{{this.data | json}}</pre> -->
+    <!-- <ngx-json-viewer [json]="rawdata"></ngx-json-viewer> -->
+    <ol>
+        <li *ngFor="let occasion of occasions" (click)="loadOccasion(occasion)">{{occasion.symbol}} {{occasion.run_date}} ({{occasion.finding.max_cur_diff}}, {{occasion.finding.max_cur_level}})</li>
+    </ol>
+
+  </div>
+
+
+  <div class="mid-col">
+      <ngx-json-viewer [json]="occasion"></ngx-json-viewer>
+  </div>
+
+  <div class="right-col">
+
+    <highcharts-chart
+        id="chart"
+        [Highcharts]="Highcharts"
+        style="height: 400px; width:60%; display: block;">
+    </highcharts-chart>
+
+
+  </div>
+
+</div>

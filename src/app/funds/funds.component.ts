@@ -206,7 +206,7 @@ export class FundsComponent implements OnInit {
 
         //trailing stop
         this.setChartTS(results.trailingStop)
-        console.log(results.fundsLOValuesOBL)
+        // console.log(results.fundsLOValuesOBL)
 //this.trailingStop = results.trailingStop
         //console.log(results.fundsLastMonth)
         this.fundsLOValuesOBL = results.fundsLOValuesOBL//fundsLOValues.filter(el => el.type === 'OBL')

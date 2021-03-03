@@ -14,7 +14,6 @@ import { Utils } from './../utils.js';
 export class FundCompareComponent implements OnInit {
   subscription: Subscription
   Highcharts: typeof Highcharts = Highcharts
-  chart1: any
   tfimetadata: Array<any>
   // tfimeta2: Array<any>
   filterSymbols: String// = 'TFI6771,TFI8172,TFI112,TFI4562,TFI1,TFI4635,TFI616,TFI8344,TFI543,TFI167'
@@ -126,6 +125,5 @@ export class FundCompareComponent implements OnInit {
 
   ngOnDestroy() {
     if (this.subscription !== undefined) this.subscription.unsubscribe()
-}
-
+  }
 }

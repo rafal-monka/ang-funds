@@ -9,6 +9,7 @@ import { TfisComponent } from './tfis/tfis.component'
 import { TfismetaComponent } from './tfismeta/tfismeta.component'
 import { FundCompareComponent } from './fund-compare/fund-compare.component'
 import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component'
+import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component'
 
 const routes: Routes = [
   { path: '', component: FundsComponent/*, canActivate: [AuthGuard]*/ },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'tfi/:symbol', component: TfisComponent, canActivate: [AuthGuard] },
   { path: 'tfi-meta', component: TfismetaComponent, canActivate: [AuthGuard] },
   { path: 'compare/:symbols/:date', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
-  { path: 'monthly/:symbols/:date/:period', component: FundMonthlyComponent/*, canActivate: [AuthGuard]*/ }
+  { path: 'monthly/:symbols/:date/:period', component: FundMonthlyComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'occasion/preview/:symbol', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ }
 ];
 
 @NgModule({

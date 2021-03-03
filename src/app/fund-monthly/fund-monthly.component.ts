@@ -38,8 +38,7 @@ export class FundMonthlyComponent implements OnInit {
   }
 
   private setChart(series, period) {
-    //console.log('setChart', title)
-
+    //console.log('setChart', series)
 
     Highcharts.chart('chart', {
       title: {

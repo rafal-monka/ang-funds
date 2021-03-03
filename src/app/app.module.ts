@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
+
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FundsComponent } from './funds/funds.component';
 import { RoiComponent } from './roi/roi.component';
@@ -16,6 +18,7 @@ import { TableLoComponent } from './components/table-lo/table-lo.component'
 import { Utils } from './utils';
 import { FundCompareComponent } from './fund-compare/fund-compare.component';
 import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component';
+import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component';
 
 @NgModule({
    declarations: [
@@ -29,14 +32,16 @@ import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component';
       PivotTableLoComponent,
       TableLoComponent,
       FundCompareComponent,
-      FundMonthlyComponent
+      FundMonthlyComponent,
+      OccasionPreviewComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       AppRoutingModule,
       FormsModule,
-      HighchartsChartModule
+      HighchartsChartModule,
+      NgxJsonViewerModule,
    ],
    providers: [ Utils ],
    bootstrap: [

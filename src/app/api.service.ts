@@ -30,6 +30,10 @@ export class ApiService {
     return this.http.get(`/api/tfi/values/${symbol}`);
   }
 
+  tfivaluesDate$(symbol, date): Observable<any> {
+    return this.http.get(`/api/tfi/values/${symbol}/${date}`);
+  }
+
   tfimonthly$(symbols, date, period): Observable<any> {
     return this.http.get(`/api/calculate/monthly/values/${symbols}/${date}/${period}`);
   }
@@ -57,6 +61,15 @@ export class ApiService {
 
   cbondsData$(date): Observable<any> {
     return this.http.get(`/api/cbonds/calculate/${date}`);
+  }
+
+  //###no longer used by GUI
+  // pickOccasion$(symbol): Observable<any> {
+  //   return this.http.get(`/api/robot/pick/${symbol}`);
+  // }
+
+  getOccasion$(symbol): Observable<any> {
+    return this.http.get(`/api/robot/occasions/${symbol}`);
   }
   // tficalclr$(symbol): Observable<any> {
   //   return this.http.get(`/api/tfi/calclr/${symbol}`);

@@ -1,0 +1,28 @@
+.float-container {
+  /* border: 1px solid black; */
+}
+
+.left-col {
+  width: 20%;
+  padding: 2px;
+  font-size: 10px;
+  float: left;
+  border: 1px solid blue;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.mid-col {
+  width: 20%;
+  padding: 2px;
+  font-size: 10px;
+  float: left;
+  border: 1px solid blue;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.right-col {
+  padding: 10px;
+  /* border: 1px solid red; */
+}
