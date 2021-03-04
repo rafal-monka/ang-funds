@@ -28,7 +28,7 @@ export class TfismetaComponent implements OnInit {
   countRecordsToProcess = 0
   countRecordsProcessed = 0
 
-  MY_TFI: Array<String> = ['SKR54','SKR23','SKR36','ARK01','ARK11','ARK23','ALL14','ALL75','ING04'/*,'PIO54'*/,'ING17']
+  MY_TFI: Array<String> = [/*'SKR54',*/'SKR23','SKR36','ARK01','ARK11','ARK23','ALL14','ALL75','ING04'/*,'PIO54'*/,'ING17']
   imgStatuses = [
     ['DONE', 'DONE.png'],
     ['CALC-STARTED', 'spinner.gif'],
@@ -115,6 +115,21 @@ export class TfismetaComponent implements OnInit {
           this.sendWssMessage('CALCSTAT-INIT', [symbol])
       }
   }
+
+  //calc stats
+  robotSimulatePick(symbol) {
+    // console.log('calcStats', symbol)
+    if (symbol === '') {
+        let selectedArr = this.checkSelectedTFIs()
+        if (confirm('Are you sure to simulate picks for all '+selectedArr.length+' TFI?')) {
+          this.countRecordsToProcess = selectedArr.length
+          this.countRecordsProcessed = 0
+          this.sendWssMessage('ROBOT-SIM-PICK-INIT', selectedArr)
+        }
+    } else {
+        this.sendWssMessage('ROBOT-SIM-PICK-INIT', [symbol])
+    }
+}
 
   //open compare page
   compare () {

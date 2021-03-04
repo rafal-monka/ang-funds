@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'tfi-meta', component: TfismetaComponent, canActivate: [AuthGuard] },
   { path: 'compare/:symbols/:date', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'monthly/:symbols/:date/:period', component: FundMonthlyComponent/*, canActivate: [AuthGuard]*/ },
-  { path: 'occasion/preview/:symbol', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ }
+  { path: 'occasion/preview/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ }
 ];
 
 @NgModule({

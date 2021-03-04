@@ -3,6 +3,7 @@ import { combineLatest, Subscription } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiService } from '../api.service';
 import * as Highcharts from 'highcharts';
+import { TFI_all } from './../tfismeta/tfi-all.js';
 
 @Component({
   selector: 'app-occasion-preview',
@@ -14,24 +15,34 @@ export class OccasionPreviewComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts
   chart: any
   occasions: Array<any>
-  symbol: String
+  symbols: String
   occasion: String
+  currentID : String
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     console.log('ngOnInit')
     this.route.params.subscribe(params => {
-      this.symbol = params['symbol']
+      this.symbols = params['symbols']
       this.refresh()
     })
   }
 
   refresh() {
-    this.refreshData(this.symbol)
+    this.refreshData(this.symbols)
   }
 
   private setChart(series, title) {
+    function afterSetExtremes(event) {
+      console.log('afterSetExtremes', event.min, event.max)
+      //, this.chart.yAxis[0].getExtremes().min, this.chart.yAxis[0].getExtremes().max
+      //this.chart.yAxis[0].setExtremes(event.min, event.max)
+      let yExtremes = [this.chart.series[0].dataMin, this.chart.series[0].dataMax]
+      console.log('yExtremes', yExtremes)
+      this.chart.yAxis[0].setExtremes(yExtremes[0], yExtremes[1])
+    }
+
     this.chart = Highcharts.chart('chart', {
       title: {
           text: title
@@ -41,6 +52,7 @@ export class OccasionPreviewComponent implements OnInit {
           type: 'line'
       },
       xAxis: {
+          events: { afterSetExtremes: afterSetExtremes },
           type: "datetime",
       },
       legend: {
@@ -50,12 +62,13 @@ export class OccasionPreviewComponent implements OnInit {
     })
   }
 
-  refreshData(symbol) {
+  refreshData(symbols) {
     this.subscription = combineLatest(
-        this.api.getOccasion$('*') //@@@
+        this.api.getOccasion$(symbols)
     ).subscribe(([occasions]) => {
         this.occasions = occasions.map(occasion => ({
             symbol: occasion.symbol,
+            name: TFI_all.filter(tfi => tfi.symbol === occasion.symbol)[0].name,
             run_date: new Date(occasion.run_date).toISOString().substring(0,10),
             minTFIValuesDate: new Date(occasion.minTFIValuesDate).toISOString().substring(0,10),
             run_params: JSON.parse(occasion.run_params),
@@ -66,6 +79,8 @@ export class OccasionPreviewComponent implements OnInit {
   }
 
   loadOccasion(item) {
+      // console.log(obj)
+      this.currentID = item._id
       this.occasion = item
       this.subscription = combineLatest(
           this.api.tfivaluesDate$(item.symbol, item.minTFIValuesDate)

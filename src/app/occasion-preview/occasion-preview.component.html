@@ -4,7 +4,7 @@
     <!-- <pre>{{this.data | json}}</pre> -->
     <!-- <ngx-json-viewer [json]="rawdata"></ngx-json-viewer> -->
     <ol>
-        <li *ngFor="let occasion of occasions" (click)="loadOccasion(occasion)">{{occasion.symbol}} {{occasion.run_date}} ({{occasion.finding.max_cur_diff}}, {{occasion.finding.max_cur_level}})</li>
+        <li class="item {{occasion._id===currentID?'item-active':''}}" id="{{occasion._id}}" *ngFor="let occasion of occasions" (click)="loadOccasion(occasion)">{{occasion.name}} ({{occasion.symbol}}) <br>{{occasion.run_date}} ({{occasion.finding.max_cur_diff}}, {{occasion.finding.max_cur_level}})</li>
     </ol>
 
   </div>

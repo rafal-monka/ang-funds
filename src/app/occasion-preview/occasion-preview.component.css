@@ -26,3 +26,12 @@
   padding: 10px;
   /* border: 1px solid red; */
 }
+
+.item {
+    border-bottom: 1px solid grey;
+}
+
+.item-active {
+    color: blue;
+    background-color: lightgrey
+}

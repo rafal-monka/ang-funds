@@ -68,8 +68,8 @@ export class ApiService {
   //   return this.http.get(`/api/robot/pick/${symbol}`);
   // }
 
-  getOccasion$(symbol): Observable<any> {
-    return this.http.get(`/api/robot/occasions/${symbol}`);
+  getOccasion$(symbols): Observable<any> {
+    return this.http.get(`/api/robot/occasions/${symbols}`);
   }
   // tficalclr$(symbol): Observable<any> {
   //   return this.http.get(`/api/tfi/calclr/${symbol}`);
