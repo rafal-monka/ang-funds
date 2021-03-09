@@ -1,0 +1,17 @@
+<pre>
+  {{message}}
+</pre>
+
+<highcharts-chart
+  id="chart"
+  [Highcharts]="Highcharts"
+  style="height: 400px; display: block; border: 1px solid lightgrey">
+</highcharts-chart>
+
+<!-- {{unique_registers | json}} -->
+<div>
+  <app-pivot-table
+    [dicts]="unique_registers"
+    [(monthlyArr)]="groupedArr">
+  </app-pivot-table>
+</div>

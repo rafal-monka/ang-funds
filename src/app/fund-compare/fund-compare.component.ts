@@ -36,12 +36,10 @@ export class FundCompareComponent implements OnInit {
     this.refreshData(this.filterSymbols, this.filterDate)
   }
 
-  private setChart(series, title) {
-    //console.log('setChart', title)
-
+  private setChart(series) {
     Highcharts.chart('chart', {
       title: {
-          text: title
+          text: null
       },
       chart: {
           zoomType: 'x',
@@ -87,6 +85,7 @@ export class FundCompareComponent implements OnInit {
 
 
         tfivalues.forEach((item, index) => {
+          tfivalues[index].symbol = tfivalues[index].name
           tfivalues[index].name = tfivalues[index].name+'|'+this.tfimetadata.filter(item => item.symbol === tfivalues[index].name)[0].name
         })
 
@@ -117,9 +116,38 @@ export class FundCompareComponent implements OnInit {
             }
         })
 
+        //include cbonds (*)
         if (includeCbonds) cbonds.forEach(cbond => tfivalues.push(cbond))
 
-        this.setChart(tfivalues, 'Compare')
+        //add trends
+        symbols.map((element, index)=> {
+            let data = tfivalues[index].data
+            let trend_lr = this.utils.calcLR(data)
+            console.log(tfivalues[index].name, trend_lr)
+            let y0 = Math.round( (trend_lr.a * data[0][0] + trend_lr.b) *100)/100
+            let yn = Math.round( (trend_lr.a * data[data.length-1][0] + trend_lr.b) *100)/100
+
+            let trend_lr_data = [{
+                    x: data[0][0],
+                    y: y0
+                },
+                {
+                    x: data[data.length-1][0],
+                    y: yn
+                }]
+
+            let days = (data[data.length-1][0] - data[0][0])/this.utils.CONST_ONE_DAY
+            tfivalues.push( {
+                name: 'LR-'+tfivalues[index].symbol+' '+Math.round( (yn-y0)/days *365 *100)/100+'%',
+                data: trend_lr_data,
+                marker: {enabled: false},
+                lineWidth: 1,
+                color: 'red'
+            })
+        })
+
+
+        this.setChart(tfivalues)
     })
   }
 

@@ -12,9 +12,11 @@ import * as Highcharts from 'highcharts';
 export class FundMonthlyComponent implements OnInit {
   subscription: Subscription
   Highcharts: typeof Highcharts = Highcharts
-  chart1: any
+  chart: any
   tfimetadata: Array<any>
+  chartType: String = 'column'
   tfimonthly: Array<any>
+  sumData: Array<any>
   filterSymbols: String// = 'TFI6771,TFI8172,TFI112,TFI4562,TFI1,TFI4635,TFI616,TFI8344,TFI543,TFI167'
   filterDate: String  = new Date().toISOString().substring(0,10)
   period: String
@@ -37,16 +39,16 @@ export class FundMonthlyComponent implements OnInit {
     this.refreshData(this.filterSymbols, this.filterDate, this.period)
   }
 
-  private setChart(series, period) {
+  private setChart(series, period, type) {
     //console.log('setChart', series)
 
-    Highcharts.chart('chart', {
+    this.chart = Highcharts.chart('chart', {
       title: {
-          text: 'By '+period
+          text: null
       },
       chart: {
           zoomType: 'x',
-          type: 'column'
+          type: type
       },
       yAxis: [{
         tickInterval: 0.05
@@ -97,12 +99,23 @@ export class FundMonthlyComponent implements OnInit {
         this.api.tfimonthly$(filterSymbols, filterDate, period)
     ).subscribe(([tfimetadata, tfimonthly]) => {
         this.tfimetadata = tfimetadata
-        this.tfimonthly = tfimonthly
+        this.tfimonthly = tfimonthly.chartData
+        this.sumData = tfimonthly.sumData
+        // console.log(this.tfimonthly)
+
         this.tfimonthly.forEach((item, index) => {
-          tfimonthly[index].name = tfimonthly[index].name+'|'+this.tfimetadata.filter(item => item.symbol === tfimonthly[index].name)[0].name
+          tfimonthly.chartData[index].symbol = tfimonthly.chartData[index].name
+          tfimonthly.chartData[index].name = this.tfimetadata.filter(item => item.symbol === tfimonthly.chartData[index].symbol)[0].name
         })
-        this.setChart(tfimonthly, period)
+        this.setChart(tfimonthly.chartData, period, this.chartType)
     })
+  }
+
+  changeChartType() {
+      // NOT WORKING???
+      // let options = this.chart.options
+      // options.chartType = this.chartType
+      // this.chart.update(options, true)
   }
 
   ngOnDestroy() {

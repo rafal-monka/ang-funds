@@ -15,7 +15,9 @@ export class OccasionPreviewComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts
   chart: any
   occasions: Array<any>
+  selectedSymbol: String
   symbols: String
+  uniqueFunds: Array<any>
   occasion: String
   currentID : String
 
@@ -64,7 +66,7 @@ export class OccasionPreviewComponent implements OnInit {
 
   refreshData(symbols) {
     this.subscription = combineLatest(
-        this.api.getOccasion$(symbols)
+        this.api.getSimulateOccasion$(symbols)
     ).subscribe(([occasions]) => {
         this.occasions = occasions.map(occasion => ({
             symbol: occasion.symbol,
@@ -75,6 +77,21 @@ export class OccasionPreviewComponent implements OnInit {
             finding: JSON.parse(occasion.finding),
             _id: occasion._id
         }))
+        //unique funds
+        this.uniqueFunds = []
+        this.occasions.forEach(occ => {
+          let pos = this.uniqueFunds.findIndex(f => f.symbol === occ.symbol)
+          if (pos === -1) {
+              this.uniqueFunds.push({
+                symbol: occ.symbol,
+                name: occ.name,
+                count: 1
+              })
+          } else {
+              this.uniqueFunds[pos].count++
+          }
+        })
+        this.uniqueFunds = this.uniqueFunds.sort((a,b) => a.symbol > b.symbol ? 1 : -1)
     })
   }
 
@@ -101,8 +118,9 @@ export class OccasionPreviewComponent implements OnInit {
           //occasion
           let occasion = {
               marker: { symbol: 'circle' },
+              color: 'green',
               lineWidth: 4,
-              name: 'O-'+item.run_date.substr(0,10),
+              name: 'O ['+item.run_date.substr(0,10)+', '+item.finding.min.date2+']',
               data: []
           }
           let label = JSON.stringify({
@@ -111,8 +129,8 @@ export class OccasionPreviewComponent implements OnInit {
           }, null, 2)
           occasion.data.push({
               name: label,
-              x: item.finding.c.date,
-              y: item.finding.c.change
+              x: item.finding.cur.date,
+              y: item.finding.cur.change
           })
           //min
           occasion.data.push({
@@ -129,28 +147,31 @@ export class OccasionPreviewComponent implements OnInit {
           series.push(occasion)
 
           //long term trend linear regression
-          if (item.finding.trend_lr !== null) {
+          if (item.finding.trend.lr !== null) {
               let trend_lr = {
                 marker: {enabled: false},
                 color: 'red',
                 lineWidth: 1,
                 name: 'LR',
                 data: [{
-                      x: item.finding.trend_lr.x0,
-                      y: item.finding.trend_lr.y0
+                      x: item.finding.trend.lr.x0,
+                      y: item.finding.trend.lr.y0
                   },
                   {
-                      x: item.finding.trend_lr.xn,
-                      y: item.finding.trend_lr.yn
+                      x: item.finding.trend.lr.xn,
+                      y: item.finding.trend.lr.yn
                   }]
               }
               series.push(trend_lr)
           }
 
-          this.setChart(series, item.symbol+'/'+item.run_date+' ('+item.finding.max_cur_diff+', '+item.finding.max_cur_level+')')
+          this.setChart(series, item.name+' ('+item.finding.stat.max_cur_diff+', '+item.finding.stat.max_cur_level+')')
       })
   }
 
+  onFundSelectChange(selectedSymbol) {
+      alert(selectedSymbol)
+  }
 
   ngOnDestroy() {
     if (this.subscription !== undefined) this.subscription.unsubscribe()

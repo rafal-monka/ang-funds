@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
@@ -68,9 +67,19 @@ export class ApiService {
   //   return this.http.get(`/api/robot/pick/${symbol}`);
   // }
 
-  getOccasion$(symbols): Observable<any> {
-    return this.http.get(`/api/robot/occasions/${symbols}`);
+  getSimulateOccasion$(symbols): Observable<any> {
+    return this.http.get(`/api/robot/simulate/occasions/${symbols}`);
   }
+
+  getRegisters$(period): Observable<any> {
+    return this.http.get(`/api/units/register/${period}/*`);
+  }
+
+  postRegisters$(purchase): Observable<any> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.post(`/api/units/purchase`, purchase, {headers});
+  }
+
   // tficalclr$(symbol): Observable<any> {
   //   return this.http.get(`/api/tfi/calclr/${symbol}`);
   // }

@@ -19,6 +19,8 @@ import { Utils } from './utils';
 import { FundCompareComponent } from './fund-compare/fund-compare.component';
 import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component';
 import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component';
+import { RegisterComponent } from './register/register.component';
+import { AddRegisterComponent } from './register/add-register/add-register.component';
 
 @NgModule({
    declarations: [
@@ -33,7 +35,8 @@ import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.co
       TableLoComponent,
       FundCompareComponent,
       FundMonthlyComponent,
-      OccasionPreviewComponent
+      OccasionPreviewComponent,
+      RegisterComponent, AddRegisterComponent
    ],
    imports: [
       BrowserModule,

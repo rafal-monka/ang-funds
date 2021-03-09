@@ -28,7 +28,7 @@ export class TfismetaComponent implements OnInit {
   countRecordsToProcess = 0
   countRecordsProcessed = 0
 
-  MY_TFI: Array<String> = [/*'SKR54',*/'SKR23','SKR36','ARK01','ARK11','ARK23','ALL14','ALL75','ING04'/*,'PIO54'*/,'ING17']
+  MY_TFI: Array<String> = [/*'SKR54',*/'SKR23','SKR36','ARK01','ARK11','ARK23','ALL14','ALL75','ING04'/*,'PIO54'*/,'ING17','ING65','UNI32']
   imgStatuses = [
     ['DONE', 'DONE.png'],
     ['CALC-STARTED', 'spinner.gif'],
@@ -182,6 +182,10 @@ export class TfismetaComponent implements OnInit {
       if (filterNameUC.indexOf(',') > -1) {
           let arr = filterNameUC.split(',')
           this.TFIs_filtered = this.TFIs_filtered.filter(tfi => arr.findIndex( a => a === tfi.symbol) > -1)
+      } else if (filterNameUC.indexOf('|') > -1) {
+          let convSearch = filterNameUC.split('|').map(frase=>"(?=.*"+frase+")").join('')
+          var regex = new RegExp(convSearch, "gi")
+          this.TFIs_filtered = this.TFIs_filtered.filter(tfi => Boolean(tfi.name.toUpperCase().match(regex)))
       } else {
           this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterName !== '' && (tfi.name.toUpperCase().indexOf(filterNameUC) >-1 || tfi.symbol.toUpperCase().indexOf(filterNameUC) >-1 || tfi.type.toUpperCase().indexOf(filterNameUC) >-1 || tfi.firm.toUpperCase().indexOf(filterNameUC) >-1) || this.filterName === '')
       }

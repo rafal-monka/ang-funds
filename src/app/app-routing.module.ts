@@ -10,9 +10,13 @@ import { TfismetaComponent } from './tfismeta/tfismeta.component'
 import { FundCompareComponent } from './fund-compare/fund-compare.component'
 import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component'
 import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component'
+import { RegisterComponent } from './register/register.component';
+import { AddRegisterComponent } from './register/add-register/add-register.component';
 
 const routes: Routes = [
   { path: '', component: FundsComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'register', component: RegisterComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'register/add', component: AddRegisterComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'roi', component: RoiComponent, canActivate: [AuthGuard] },
   { path: 'tfi/:symbol', component: TfisComponent, canActivate: [AuthGuard] },
   { path: 'tfi-meta', component: TfismetaComponent, canActivate: [AuthGuard] },

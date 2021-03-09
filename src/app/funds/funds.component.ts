@@ -194,7 +194,8 @@ export class FundsComponent implements OnInit {
         this.dicts = results.dict
         let chartDataOBL = results.chartDataOBL
 
-        //console.log('chartDataOBL', chartDataOBL)
+        console.log('results.monthlyArrOBL', results.monthlyArrOBL)
+        console.log('results.chartDataOBL', results.chartDataOBL)
 
         this.setChartOBL(chartDataOBL)
         this.monthlyArrOBL = results.monthlyArrOBL

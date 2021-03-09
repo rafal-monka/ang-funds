@@ -1,0 +1,10 @@
+<p>
+  New purchase
+</p>
+<div>
+  <textarea  rows="15" cols="120" (change)="doTextareaValueChange($event)">{{data}}</textarea>
+  <br>
+  <button class="btn btn-success" (click)="saveData()">Save</button>
+  <br>
+  <pre>{{result}}</pre>
+</div>
