@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
       this.message = "Fetching data...please wait"
       this.subscription = combineLatest(
-        this.api.getRegisters$('Q')
+        this.api.getRegisters$('M')
       ).subscribe(([registers]) => {
           if (registers.status !== 'OK') this.message = JSON.stringify(registers.error)
 

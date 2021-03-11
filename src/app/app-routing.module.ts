@@ -14,12 +14,12 @@ import { RegisterComponent } from './register/register.component';
 import { AddRegisterComponent } from './register/add-register/add-register.component';
 
 const routes: Routes = [
-  { path: '', component: FundsComponent/*, canActivate: [AuthGuard]*/ },
+  { path: '', component: TfismetaComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'register', component: RegisterComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'register/add', component: AddRegisterComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'roi', component: RoiComponent, canActivate: [AuthGuard] },
   { path: 'tfi/:symbol', component: TfisComponent, canActivate: [AuthGuard] },
-  { path: 'tfi-meta', component: TfismetaComponent, canActivate: [AuthGuard] },
+  { path: 'funds', component: FundsComponent, canActivate: [AuthGuard] },
   { path: 'compare/:symbols/:date', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'monthly/:symbols/:date/:period', component: FundMonthlyComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'occasion/preview/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ }
