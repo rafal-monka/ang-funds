@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'funds', component: FundsComponent, canActivate: [AuthGuard] },
   { path: 'compare/:symbols/:date', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'monthly/:symbols/:date/:period', component: FundMonthlyComponent/*, canActivate: [AuthGuard]*/ },
-  { path: 'occasion/preview/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ }
+  { path: 'occasion/preview/:mode/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ }
 ];
 
 @NgModule({

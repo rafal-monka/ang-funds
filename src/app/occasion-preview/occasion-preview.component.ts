@@ -17,6 +17,7 @@ export class OccasionPreviewComponent implements OnInit {
   occasions: Array<any>
   selectedSymbol: String
   symbols: String
+  mode: String //S=simulation, R-real
   uniqueFunds: Array<any>
   occasion: String
   currentID : String
@@ -27,12 +28,13 @@ export class OccasionPreviewComponent implements OnInit {
     console.log('ngOnInit')
     this.route.params.subscribe(params => {
       this.symbols = params['symbols']
+      this.mode = params['mode']
       this.refresh()
     })
   }
 
   refresh() {
-    this.refreshData(this.symbols)
+    this.refreshData(this.mode, this.symbols) //@@@ simulation / real
   }
 
   private setChart(series, title) {
@@ -64,9 +66,9 @@ export class OccasionPreviewComponent implements OnInit {
     })
   }
 
-  refreshData(symbols) {
+  refreshData(mode, symbols) {
     this.subscription = combineLatest(
-        this.api.getSimulateOccasion$(symbols)
+        this.api.getOccasions$(mode, symbols)
     ).subscribe(([occasions]) => {
         this.occasions = occasions.map(occasion => ({
             symbol: occasion.symbol,

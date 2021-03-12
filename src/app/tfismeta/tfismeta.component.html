@@ -1,8 +1,8 @@
 <!-- <pre>{{tfimeta | json}}</pre> -->
 <div style="padding: 2px">
     <div>
-          <button class="btn btn-primary btn-sm" *ngIf="!wssIsActive" (click)="connectWss()">Connect</button>
-          <button class="btn btn-warning btn-sm" *ngIf="wssIsActive" (click)="disconnectWss()">Disconnect</button>
+          <button class="btn btn-success btn-sm" *ngIf="!wssIsActive" (click)="connectWss()">On</button>
+          <button class="btn btn-danger btn-sm" *ngIf="wssIsActive" (click)="disconnectWss()">Off</button>
 
           &nbsp;
           <input [(ngModel)]="filterName" placeholder="Filter by TFI name or symbol(s)" size="40" (change)="refresh()">
@@ -26,10 +26,11 @@
           <button class="btn btn-sm btn-primary" (click)="loadValueTFI('')">Update</button>
           &nbsp;<button class="btn btn-sm btn-success" (click)="calcLR('')">CalcLR</button>
           &nbsp;<button class="btn btn-sm btn-warning" (click)="calcStats('')">Stats</button>
-          &nbsp;<button class="btn btn-sm btn-danger" (click)="robotSimulatePick('')">SimPick</button>
+          &nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-danger" (click)="robotPick('S', '')">Sim-Pick</button>
+          &nbsp;<button class="btn btn-sm btn-danger" (click)="robotPick('R', '')">Pick</button>
 
           &nbsp;
-          <input [(ngModel)]="compareDate" placeholder="Date to compare" size="10" (change)="compare()">
+          &nbsp;&nbsp;<input [(ngModel)]="compareDate" placeholder="Date to compare" size="10" (change)="compare()">
           &nbsp;<button class="btn btn-sm btn-info" (click)="compare()">Compare</button>
           &nbsp;<button class="btn btn-sm btn-info" (click)="ampl()">Ampl</button>
       </div>
@@ -95,7 +96,7 @@
                         <button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-primary" (click)="loadValueTFI(TFI.symbol)">U</button>
                         &nbsp;<button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-success" (click)="calcLR(TFI.symbol)">C</button>
                         &nbsp;<button *ngIf="true || TFI.metadata.status === 'OK'" class="btn btn-sm btn-warning" (click)="calcStats(TFI.symbol)">S</button>
-                        &nbsp;<button class="btn btn-sm btn-danger" (click)="robotSimulatePick(TFI.symbol)">P</button>
+
                       </td>
                       <td>
                         <svg width="100" height="45" style="border: 1px solid grey">

@@ -67,8 +67,8 @@ export class ApiService {
   //   return this.http.get(`/api/robot/pick/${symbol}`);
   // }
 
-  getSimulateOccasion$(symbols): Observable<any> {
-    return this.http.get(`/api/robot/simulate/occasions/${symbols}`);
+  getOccasions$(mode, symbols): Observable<any> {
+    return this.http.get(`/api/robot/occasions/${mode}/${symbols}`);
   }
 
   getRegisters$(period): Observable<any> {

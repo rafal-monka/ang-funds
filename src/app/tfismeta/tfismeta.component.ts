@@ -117,17 +117,17 @@ export class TfismetaComponent implements OnInit {
   }
 
   //calc stats
-  robotSimulatePick(symbol) {
+  robotPick(mode, symbol) {
     // console.log('calcStats', symbol)
     if (symbol === '') {
         let selectedArr = this.checkSelectedTFIs()
         if (confirm('Are you sure to simulate picks for all '+selectedArr.length+' TFI?')) {
           this.countRecordsToProcess = selectedArr.length
           this.countRecordsProcessed = 0
-          this.sendWssMessage('ROBOT-SIM-PICK-INIT', selectedArr)
+          this.sendWssMessage('ROBOT-'+mode+'-PICK-INIT', selectedArr)
         }
     } else {
-        this.sendWssMessage('ROBOT-SIM-PICK-INIT', [symbol])
+        this.sendWssMessage('ROBOT-'+mode+'-PICK-INIT', [symbol])
     }
 }
 
