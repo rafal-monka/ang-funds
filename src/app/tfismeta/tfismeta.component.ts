@@ -19,16 +19,15 @@ export class TfismetaComponent implements OnInit {
   TFIs : Array<any> = []
   TFIs_filtered : Array<any> = []
   filterInitialized: Boolean = false
-  filterMyTFI: Boolean = true
-  filterName: String = ''
+  filterName: String = '#MY' //my funds tag
   filterLook: Boolean = false
   selectedTFI: Array<any> = []
   checkFilteredTFI: Boolean = false
   compareDate: String = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().substring(0,10)
   countRecordsToProcess = 0
   countRecordsProcessed = 0
+  tagLabel: String = ''
 
-  MY_TFI: Array<String> = [/*'SKR54',*/'SKR23','SKR36','ARK01','ARK11','ARK23','ALL14','ALL75','ING04'/*,'PIO54'*/,'ING17','ING65','UNI32']
   imgStatuses = [
     ['DONE', 'DONE.png'],
     ['CALC-STARTED', 'spinner.gif'],
@@ -121,7 +120,7 @@ export class TfismetaComponent implements OnInit {
     // console.log('calcStats', symbol)
     if (symbol === '') {
         let selectedArr = this.checkSelectedTFIs()
-        if (confirm('Are you sure to simulate picks for all '+selectedArr.length+' TFI?')) {
+        if (confirm('Mode: '+mode+'. Are you sure to create picks for all '+selectedArr.length+' TFI?')) {
           this.countRecordsToProcess = selectedArr.length
           this.countRecordsProcessed = 0
           this.sendWssMessage('ROBOT-'+mode+'-PICK-INIT', selectedArr)
@@ -133,25 +132,38 @@ export class TfismetaComponent implements OnInit {
 
   //open compare page
   compare () {
-    let selectedArr = this.checkSelectedTFIs()
-    if (selectedArr.length > 32) {
-        alert('You can not compare more than 32 funds')
-        return
-    }
-    let urlParams = selectedArr.join(',')+'/'+this.compareDate
-    window.open('/compare/'+urlParams, "_blank");
+      let selectedArr = this.checkSelectedTFIs()
+      if (selectedArr.length > 32) {
+          alert('You can not compare more than 32 funds')
+          return
+      }
+      let urlParams = selectedArr.join(',')+'/'+this.compareDate
+      window.open('/compare/'+urlParams, "_blank");
   }
 
   //open monthly/quarterly/yearly page
   ampl() {
-    let selectedArr = this.checkSelectedTFIs()
-    if (selectedArr.length > 32) {
-        alert('You can not show more than 32 funds')
-        return
-    }
-    let urlParams = selectedArr.join(',')+'/'+this.compareDate+'/M'
-    window.open('/monthly/'+urlParams, "_blank");
+      let selectedArr = this.checkSelectedTFIs()
+      if (selectedArr.length > 32) {
+          alert('You can not show more than 32 funds')
+          return
+      }
+      let urlParams = selectedArr.join(',')+'/'+this.compareDate+'/M'
+      window.open('/monthly/'+urlParams, "_blank");
   }
+
+  tag() {
+      //console.log(this.tagLabel)
+      if (this.tagLabel !== 'x') {
+          let selectedArr = this.checkSelectedTFIs()
+          if (confirm('Are you sure to tag for all '+selectedArr.length+' TFI?')) {
+              this.countRecordsToProcess = selectedArr.length
+              this.countRecordsProcessed = 0
+              this.sendWssMessage('TAG-INIT', { symbols: selectedArr, tag: this.tagLabel })
+          }
+      }
+  }
+
 
   private refreshMetadata(event, symbol, data) {
       let index = this.TFIs_filtered.findIndex(tfi => tfi.symbol === symbol)
@@ -186,10 +198,14 @@ export class TfismetaComponent implements OnInit {
           let convSearch = filterNameUC.split('|').map(frase=>"(?=.*"+frase+")").join('')
           var regex = new RegExp(convSearch, "gi")
           this.TFIs_filtered = this.TFIs_filtered.filter(tfi => Boolean(tfi.name.toUpperCase().match(regex)))
+      } else if (filterNameUC.indexOf('#') > -1) {
+          let tag = filterNameUC.substr(1)
+          console.log('tag', tag)
+          this.TFIs_filtered = this.TFIs_filtered.filter(tfi => tfi.metadata.tags.indexOf(tag) >-1 )
       } else {
           this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterName !== '' && (tfi.name.toUpperCase().indexOf(filterNameUC) >-1 || tfi.symbol.toUpperCase().indexOf(filterNameUC) >-1 || tfi.type.toUpperCase().indexOf(filterNameUC) >-1 || tfi.firm.toUpperCase().indexOf(filterNameUC) >-1) || this.filterName === '')
       }
-      this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterMyTFI && (this.MY_TFI.indexOf(tfi.symbol) >-1) || this.filterMyTFI===false)
+      //this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterMyTFI && (this.MY_TFI.indexOf(tfi.symbol) >-1) || this.filterMyTFI===false)
       this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterLook && (tfi.metadata.look > 0) || this.filterLook===false)
 
       this.TFIs_filtered = this.TFIs_filtered.sort((a,b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1: -1)

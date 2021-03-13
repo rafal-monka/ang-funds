@@ -34,6 +34,7 @@ export class PivotTableComponent implements OnInit {
 }
 
   private pivotTable(monthlyArr) {
+    if (monthlyArr === undefined) return
     this.uniqueDates = [...new Set(/*this.*/monthlyArr.sort( (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map(item => this.dateFormat(item.date)))]
     this.uniqueDates2 = this.uniqueDates.filter(date=>date!=='9999-12-31')
     this.uniqueFunds = [...new Set(/*this.*/monthlyArr.sort( (a, b) => a.symbol >= b.symbol ? 1 : -1).map(item => item.symbol ))]

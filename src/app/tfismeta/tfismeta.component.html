@@ -7,7 +7,7 @@
           &nbsp;
           <input [(ngModel)]="filterName" placeholder="Filter by TFI name or symbol(s)" size="40" (change)="refresh()">
 
-          &nbsp;
+          <!--&nbsp;
           <label>My Funds
               <input type="checkbox" [(ngModel)]="filterMyTFI" (change)="refresh()"/>
           </label>
@@ -17,10 +17,14 @@
               <input type="checkbox" [(ngModel)]="filterInitialized" (change)="refresh()"/>
           </label>
 
-          &nbsp;
+           &nbsp;
           <label>Look
               <input type="checkbox" [(ngModel)]="filterLook" (change)="refresh()"/>
-          </label>
+          </label> -->
+
+          &nbsp;
+          <input [(ngModel)]="tagLabel" placeholder="Tag" size="6">
+          <button class="btn btn-sm btn-info" (click)="tag()">Tag</button>
 
           &nbsp;
           <button class="btn btn-sm btn-primary" (click)="loadValueTFI('')">Update</button>
@@ -76,10 +80,10 @@
                       <td>{{TFI.metadata.initDate | date}}</td>
                       <td>{{TFI.metadata.lastDate | date}}</td>
                       <td>
-                          LR a={{TFI.metadata.lra | number : '1.2-2'}}, b={{TFI.metadata.lrb | number : '1.2-2'}}
-                          <!-- <br/>LastDiff={{TFI.metadata.lastDiff}} lastDiffPercent={{TFI.metadata.lastDiffPercent}}% -->
+                        {{TFI.metadata.method}}
+                          <!-- LR a={{TFI.metadata.lra | number : '1.2-2'}}, b={{TFI.metadata.lrb | number : '1.2-2'}}
                           <br/>diffLR a={{TFI.metadata.diff_lra | number : '1.2-2'}}, b={{TFI.metadata.diff_lrb | number : '1.2-2'}}
-                          <br/>{{TFI.metadata.CONST_LAST_PERIOD}}
+                          <br/>{{TFI.metadata.CONST_LAST_PERIOD}} -->
                       </td>
                       <td nowrap>
                           {{utils.getLRAPercent(TFI.metadata.lra)}}%
@@ -107,7 +111,10 @@
                           [attr.points]="'0,0 20,20 30,10 40,15'"/>
                         </svg>
                       </td>
-                      <td>{{TFI.metadata.updated_at}}{{TFI.metadata.method}}</td>
+                      <td>{{TFI.metadata.updated_at}}
+                        <br>{{TFI.metadata.tags}}
+                        <br>{{TFI.metadata.class}}
+                      </td>
                   </tr>
               </tbody>
           </table>

@@ -21,6 +21,7 @@ import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component';
 import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component';
 import { RegisterComponent } from './register/register.component';
 import { AddRegisterComponent } from './register/add-register/add-register.component';
+import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
    declarations: [
@@ -45,6 +46,7 @@ import { AddRegisterComponent } from './register/add-register/add-register.compo
       FormsModule,
       HighchartsChartModule,
       NgxJsonViewerModule,
+      NgbModule
    ],
    providers: [ Utils ],
    bootstrap: [

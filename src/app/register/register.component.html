@@ -1,17 +1,46 @@
-<pre>
+<pre *ngIf="loading">
   {{message}}
 </pre>
 
-<highcharts-chart
+<ngb-tabset [destroyOnHide]="false">
+
+    <ngb-tab *ngFor="let class of fundClasses; let i=index" title="{{class}}">
+        <ng-template ngbTabContent>
+          <!-- {{class}} index={{i}} -->
+          <highcharts-chart
+            id="chart{{class}}"
+            [Highcharts]="Highcharts"
+            style="height: 400px; display: block; border: 1px solid lightgrey">
+          </highcharts-chart>
+
+          <div>
+            <app-pivot-table
+              [dicts]="groupedUR[i]"
+              [(monthlyArr)]="groupedArr[i]">
+            </app-pivot-table>
+          </div>
+
+          <div>
+            <app-table-lo
+              [fundsLO]="lineOfDefence[i]"
+              [chartID]="'chartLO'+class"
+              [highChart]="Highcharts"></app-table-lo>
+          </div>
+
+        </ng-template>
+    </ngb-tab>
+
+</ngb-tabset>
+<br>
+
+<!-- <highcharts-chart
   id="chart"
   [Highcharts]="Highcharts"
   style="height: 400px; display: block; border: 1px solid lightgrey">
-</highcharts-chart>
+</highcharts-chart> -->
 
 <!-- {{unique_registers | json}} -->
-<div>
-  <app-pivot-table
-    [dicts]="unique_registers"
-    [(monthlyArr)]="groupedArr">
-  </app-pivot-table>
-</div>
+
+
+
+

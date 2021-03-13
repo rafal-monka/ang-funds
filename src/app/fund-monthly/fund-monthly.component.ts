@@ -101,7 +101,7 @@ export class FundMonthlyComponent implements OnInit {
         this.tfimetadata = tfimetadata
         this.tfimonthly = tfimonthly.chartData
         this.sumData = tfimonthly.sumData
-        // console.log(this.tfimonthly)
+        console.log(this.tfimonthly)
 
         this.tfimonthly.forEach((item, index) => {
           tfimonthly.chartData[index].symbol = tfimonthly.chartData[index].name

@@ -7,7 +7,7 @@
 }
 
 .left {
-  flex: 0 0 40%;
+  flex: 0 0 50%;
 }
 
 .right {
@@ -20,4 +20,8 @@
 .svg-class {
   font-family: Verdana;
   font-size: 3
+}
+
+.textlabel {
+  font-size: 16px;
 }
