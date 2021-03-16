@@ -1,33 +1,42 @@
-<div class="float-container">
+<div>
+  <select [(ngModel)]="selectedRunDate" (change)="onRunDateSelectChange(selectedRunDate)">
+    <option *ngFor="let urd of uniqueRunDates" value={{urd}}>{{urd}}</option>
+  </select>
+  &nbsp;
+  <select [(ngModel)]="selectedSymbol" (change)="onFundSelectChange(selectedSymbol)">
+    <option *ngFor="let uf of uniqueFunds" value={{uf.symbol}}>{{uf.symbol}} {{uf.name}} [{{uf.count}}]</option>
+  </select>
+</div>
 
-  <div>
-    <select [(ngModel)]="selectedSymbol" (change)="onFundSelectChange(selectedSymbol)">
-      <option *ngFor="let uf of uniqueFunds" value={{uf.symbol}}>{{uf.symbol}} {{uf.name}} [{{uf.count}}]</option>
-    </select>
+<div>
+  <div class="float-container">
+
+    <div class="left-col">
+      <!-- <pre>{{this.data | json}}</pre> -->
+      <!-- <ngx-json-viewer [json]="rawdata"></ngx-json-viewer> -->
+      <ol>
+          <li class="item {{occasion._id===currentID?'item-active':''}}" id="{{occasion._id}}" *ngFor="let occasion of occasionsFiltered" (click)="loadOccasion(occasion)">{{occasion.name}} ({{occasion.symbol}}) <br>{{occasion.run_date}} ({{occasion.finding.stat.max_cur_diff}}, {{occasion.finding.stat.max_cur_level}})</li>
+      </ol>
+
+    </div>
+
+
+    <div class="mid-col">
+        <ngx-json-viewer [json]="occasion"></ngx-json-viewer>
+    </div>
+
+    <div class="right-col">
+        <highcharts-chart
+            id="chart"
+            [Highcharts]="Highcharts"
+            style="height: 400px; width:60%; display: block;">
+        </highcharts-chart>
+    </div>
+
   </div>
-  <div class="left-col">
-    <!-- <pre>{{this.data | json}}</pre> -->
-    <!-- <ngx-json-viewer [json]="rawdata"></ngx-json-viewer> -->
-    <ol>
-        <li class="item {{occasion._id===currentID?'item-active':''}}" id="{{occasion._id}}" *ngFor="let occasion of occasions" (click)="loadOccasion(occasion)">{{occasion.name}} ({{occasion.symbol}}) <br>{{occasion.run_date}} ({{occasion.finding.stat.max_cur_diff}}, {{occasion.finding.stat.max_cur_level}})</li>
-    </ol>
-
-  </div>
-
-
-  <div class="mid-col">
-      <ngx-json-viewer [json]="occasion"></ngx-json-viewer>
-  </div>
-
-  <div class="right-col">
-
-    <highcharts-chart
-        id="chart"
-        [Highcharts]="Highcharts"
-        style="height: 400px; width:60%; display: block;">
-    </highcharts-chart>
-
-
-  </div>
-
+</div>
+<div>
+  <pre>
+      <small><ngx-json-viewer [json]="occasionsParamsConf"></ngx-json-viewer></small>
+  </pre>
 </div>

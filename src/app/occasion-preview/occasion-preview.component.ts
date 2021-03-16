@@ -15,12 +15,17 @@ export class OccasionPreviewComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts
   chart: any
   occasions: Array<any>
-  selectedSymbol: String
+  occasionsParamsConf: Array<any>
+  occasionsFiltered: Array<any>
+  selectedSymbol: String = '*'
+  selectedRunDate: String = '*'
   symbols: String
   mode: String //S=simulation, R-real
   uniqueFunds: Array<any>
+  uniqueRunDates: Array<any>
   occasion: String
   currentID : String
+  firstRefresh = true
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
@@ -29,6 +34,7 @@ export class OccasionPreviewComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.symbols = params['symbols']
       this.mode = params['mode']
+
       this.refresh()
     })
   }
@@ -68,8 +74,10 @@ export class OccasionPreviewComponent implements OnInit {
 
   refreshData(mode, symbols) {
     this.subscription = combineLatest(
-        this.api.getOccasions$(mode, symbols)
-    ).subscribe(([occasions]) => {
+        this.api.getOccasions$(mode, symbols),
+        this.api.getOccasionsParamsConf$(mode)
+    ).subscribe(([occasions, occasionsParamsConf]) => {
+        this.occasionsParamsConf = occasionsParamsConf
         this.occasions = occasions.map(occasion => ({
             symbol: occasion.symbol,
             name: TFI_all.filter(tfi => tfi.symbol === occasion.symbol)[0].name,
@@ -79,21 +87,34 @@ export class OccasionPreviewComponent implements OnInit {
             finding: JSON.parse(occasion.finding),
             _id: occasion._id
         }))
-        //unique funds
-        this.uniqueFunds = []
-        this.occasions.forEach(occ => {
-          let pos = this.uniqueFunds.findIndex(f => f.symbol === occ.symbol)
-          if (pos === -1) {
-              this.uniqueFunds.push({
-                symbol: occ.symbol,
-                name: occ.name,
-                count: 1
-              })
-          } else {
-              this.uniqueFunds[pos].count++
-          }
-        })
-        this.uniqueFunds = this.uniqueFunds.sort((a,b) => a.symbol > b.symbol ? 1 : -1)
+
+        if (this.firstRefresh) {
+            //unique funds and unique run_dates
+            this.uniqueFunds = [{symbol: '*', name: '---wszystkie---', count: null}]
+            this.uniqueRunDates = []
+            this.occasions.forEach(occ => {
+                //unique funds
+                let pos = this.uniqueFunds.findIndex(f => f.symbol === occ.symbol)
+                if (pos === -1) {
+                    this.uniqueFunds.push({
+                      symbol: occ.symbol,
+                      name: occ.name,
+                      count: 1
+                    })
+                } else {
+                    this.uniqueFunds[pos].count++
+                }
+            })
+            this.uniqueFunds = this.uniqueFunds.sort((a,b) => a.symbol > b.symbol ? 1 : -1)
+
+            //unique run dates
+            this.uniqueRunDates = ['*', ...new Set (occasions.map(occ => new Date(occ.run_date).toISOString().substr(0,10)) )].sort((a,b) => a > b ? 1 : -1)
+
+            //occasionsFiltered
+            this.occasionsFiltered = this.occasions.map(occ => occ)
+
+            this.firstRefresh = false
+        }
     })
   }
 
@@ -172,8 +193,14 @@ export class OccasionPreviewComponent implements OnInit {
   }
 
   onFundSelectChange(selectedSymbol) {
-      alert(selectedSymbol)
+      this.occasionsFiltered = this.occasions.filter(occ => (occ.symbol === selectedSymbol || selectedSymbol === '*') && (occ.run_date === this.selectedRunDate || this.selectedRunDate === '*'))
+      // alert(selectedSymbol)
   }
+
+  onRunDateSelectChange(selectedRunDate) {
+    this.occasionsFiltered = this.occasions.filter(occ => (occ.run_date === selectedRunDate || selectedRunDate === '*') && (occ.symbol === this.selectedSymbol || this.selectedSymbol === '*'))
+    // alert(selectedRunDate)
+}
 
   ngOnDestroy() {
     if (this.subscription !== undefined) this.subscription.unsubscribe()

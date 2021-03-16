@@ -71,6 +71,10 @@ export class ApiService {
     return this.http.get(`/api/robot/occasions/${mode}/${symbols}`);
   }
 
+  getOccasionsParamsConf$(mode): Observable<any> {
+    return this.http.get(`/api/robot/occasions-params-conf/${mode}`);
+  }
+
   getRegisters$(period): Observable<any> {
     return this.http.get(`/api/units/register/${period}/*`);
   }

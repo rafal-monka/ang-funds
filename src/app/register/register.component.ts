@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
           text: title
       },
       chart: {
-          height: '50%',
+          //height: '50%',
           zoomType: 'x',
           type: 'line'
       },
