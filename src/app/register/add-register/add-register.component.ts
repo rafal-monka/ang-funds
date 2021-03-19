@@ -9,6 +9,7 @@ import { ApiService } from '../../api.service';
 export class AddRegisterComponent implements OnInit {
   data: String = ''
   result: String
+  type: String = 'P' //purchase
 
   constructor(private api: ApiService) { }
 
@@ -21,10 +22,10 @@ export class AddRegisterComponent implements OnInit {
   }
 
   saveData() {
-    if (confirm('Are you sure?')) {
+    if (confirm('Are you sure? Type: '+this.type)) {
       console.log(this.data)
       let body = this.data
-      this.api.postRegisters$(body).subscribe(result => {
+      this.api.postRegisters$(body, this.type).subscribe(result => {
         this.result = JSON.stringify(result)
       })
     }

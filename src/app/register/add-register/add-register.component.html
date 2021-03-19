@@ -1,9 +1,30 @@
 <p>
-  New purchase
+  New operation
 </p>
 <div>
-  <textarea  rows="15" cols="120" (change)="doTextareaValueChange($event)">{{data}}</textarea>
+  <input type="radio"
+    id="radioTypeP"
+    name="type"
+    value="P"
+    [(ngModel)]="type" />
+
+  <label class="form-check-label" for="radioTypeP">
+    Purchase
+  </label>
+  &nbsp;
+  <input type="radio"
+    id="radioTypeR"
+    name="type"
+    value="R"
+    [(ngModel)]="type" />
+  <label class="form-check-label" for="radioTypeR">
+    Redeem
+  </label>
+
   <br>
+  <textarea rows="10" cols="100" (change)="doTextareaValueChange($event)">{{data}}</textarea>
+  <br>
+
   <button class="btn btn-success" (click)="saveData()">Save</button>
   <br>
   <pre>{{result}}</pre>

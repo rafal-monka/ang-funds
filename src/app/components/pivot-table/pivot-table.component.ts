@@ -13,7 +13,7 @@ export class PivotTableComponent implements OnInit {
   @Input() dicts : Array<any> = []
   pivotArr: Array<any> = [[]];
   uniqueFunds : Array<any>;
-  fundURLS : Array<any> = [];
+  fundDict : Array<any> = [];
   uniqueDates : Array<any>;
   uniqueDates2 : Array<any>;
   total: number = 0
@@ -25,9 +25,9 @@ export class PivotTableComponent implements OnInit {
     return new Date(date).toISOString().substring(0,10)
   }
 
-  getFundAolUrl(symbol) {
+  getFundDict(symbol) {
     try {
-        return this.dicts ? this.dicts.filter(f => f.symbol===symbol)[0].aolurl : ''
+        return this.dicts ? this.dicts.filter(f => f.symbol===symbol)[0] : ''
     } catch (e) {
         return 'ERR:'+symbol
     }
@@ -41,7 +41,7 @@ export class PivotTableComponent implements OnInit {
 
     this.uniqueFunds.forEach((ufund, r) => {
         this.pivotArr[ufund] = []
-        this.fundURLS[r] = this.getFundAolUrl(ufund)
+        this.fundDict[r] = this.getFundDict(ufund)
         this.pivotArr['SUM'] = []
         this.uniqueDates.forEach((udate, c) => {
             this.pivotArr[ufund][udate] = []

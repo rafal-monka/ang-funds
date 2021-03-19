@@ -77,7 +77,10 @@ export class OccasionPreviewComponent implements OnInit {
         this.api.getOccasions$(mode, symbols),
         this.api.getOccasionsParamsConf$(mode)
     ).subscribe(([occasions, occasionsParamsConf]) => {
-        this.occasionsParamsConf = occasionsParamsConf
+        //params conf
+        this.occasionsParamsConf = occasionsParamsConf[0] //only first record
+
+        //occasions
         this.occasions = occasions.map(occasion => ({
             symbol: occasion.symbol,
             name: TFI_all.filter(tfi => tfi.symbol === occasion.symbol)[0].name,
@@ -88,6 +91,7 @@ export class OccasionPreviewComponent implements OnInit {
             _id: occasion._id
         }))
 
+        //build GUI lists
         if (this.firstRefresh) {
             //unique funds and unique run_dates
             this.uniqueFunds = [{symbol: '*', name: '---wszystkie---', count: null}]

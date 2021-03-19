@@ -3784,9 +3784,9 @@ export const TFI_all = [
 		info: "akcji polskich małych i średnich spółek"
 	},
 	{
-		source: "ANALIZY", symbol: "ARK01",
+		source: "ANALIZY", symbol: "ARS01",
 		name: "Santander Akcji Polskich",
-		href: "/fundusze-inwestycyjne-otwarte/ARK01/santander-akcji-polskich",
+		href: "/fundusze-inwestycyjne-otwarte/ARS01/santander-akcji-polskich-s",
 		type: "Akcyjne",
 		firm: "Santander FIO",
 		info: "akcji polskich uniwersalne"
@@ -3824,17 +3824,17 @@ export const TFI_all = [
 		info: "papierów dłużnych europejskich uniwersalne"
 	},
 	{
-		source: "ANALIZY", symbol: "ARK29",
+		source: "ANALIZY", symbol: "ARK29S",
 		name: "Santander Obligacji Korporacyjnych",
-		href: "/fundusze-inwestycyjne-otwarte/ARK29/santander-obligacji-korporacyjnych",
+		href: "/fundusze-inwestycyjne-otwarte/ARK29S/santander-obligacji-korporacyjnych-s",
 		type: "Dłużne",
 		firm: "Santander FIO",
 		info: "papierów dłużnych polskich korporacyjnych"
 	},
 	{
-		source: "ANALIZY", symbol: "ARK11",
+		source: "ANALIZY", symbol: "ARS11",
 		name: "Santander Obligacji Skarbowych",
-		href: "/fundusze-inwestycyjne-otwarte/ARK11/santander-obligacji-skarbowych",
+		href: "/fundusze-inwestycyjne-otwarte/ARS11/santander-obligacji-skarbowych-s",
 		type: "Dłużne",
 		firm: "Santander FIO",
 		info: "papierów dłużnych polskich skarbowych długoterminowych"
@@ -3856,9 +3856,9 @@ export const TFI_all = [
 		info: "mieszane polskie stabilnego wzrostu"
 	},
 	{
-		source: "ANALIZY", symbol: "ARK33",
+		source: "ANALIZY", symbol: "ARK33S",
 		name: "Santander Platinum Stabilny",
-		href: "/fundusze-inwestycyjne-otwarte/ARK33/santander-platinum-stabilny",
+		href: "/fundusze-inwestycyjne-otwarte/ARK33S/santander-platinum-stabilny-s",
 		type: "Mieszane",
 		firm: "Santander FIO",
 		info: "mieszane zagraniczne stabilnego wzrostu"
@@ -3960,9 +3960,9 @@ export const TFI_all = [
 		info: "akcji zagranicznych sektorowych pozostałe"
 	},
 	{
-		source: "ANALIZY", symbol: "ARK04",
+		source: "ANALIZY", symbol: "ARS04",
 		name: "Santander Stabilnego Wzrostu",
-		href: "/fundusze-inwestycyjne-otwarte/ARK04/santander-stabilnego-wzrostu",
+		href: "/fundusze-inwestycyjne-otwarte/ARS04/santander-stabilnego-wzrostu-s",
 		type: "Mieszane",
 		firm: "Santander FIO",
 		info: "mieszane polskie stabilnego wzrostu"

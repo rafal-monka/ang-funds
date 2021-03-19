@@ -50,7 +50,7 @@ export class ApiService {
   }
 
   perform$(): Observable<any> {
-    console.log('perform$()')
+    //console.log('perform$()')
     return this.http.get('/perform')
   }
 
@@ -79,9 +79,14 @@ export class ApiService {
     return this.http.get(`/api/units/register/${period}/*`);
   }
 
-  postRegisters$(purchase): Observable<any> {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.post(`/api/units/purchase`, purchase, {headers});
+  postRegisters$(object, type): Observable<any> {
+      const headers = new HttpHeaders().set("Content-Type", "application/json");
+      switch (type.toUpperCase()) {
+          case 'P':
+              return this.http.post(`/api/units/purchase`, object, {headers});
+          case 'R':
+              return this.http.post(`/api/units/redeem`, object, {headers});
+      }
   }
 
   // tficalclr$(symbol): Observable<any> {

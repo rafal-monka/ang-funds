@@ -1,9 +1,10 @@
 <table class="" *ngIf="uniqueFunds && uniqueFunds.length>0" class="table table-sm pivotTable table-striped" border=1>
   <thead>
-    <tr><th>Fund</th><th *ngFor="let udate of uniqueDates2" nowrap>{{udate}}</th><th>Total</th><th>Total (net)</th><th>Capital</th><th>Value</th><th>Fund</th></tr>
+    <tr><th>Nr</th><th>Fund</th><th *ngFor="let udate of uniqueDates2" nowrap>{{udate}}</th><th>Total</th><th>Total (net)</th><th>Capital</th><th>Value</th><th>Fund</th></tr>
   </thead>
   <tr *ngFor="let ufund of uniqueFunds; let r=index">
-      <td nowrap><a target="_blank" href="{{fundURLS[r]}}">{{ufund}}</a></td>
+      <td>{{r+1}}</td>
+      <td nowrap><a target="_blank" href="{{fundDict[r].aolurl}}">{{fundDict[r].symbol}} {{fundDict[r].name}}</a></td>
       <td *ngFor="let udate of uniqueDates2; let c=index" class="valueCell">
           <div *ngFor="let item of pivotArr[ufund][udate]" title="{{item.capital | number:'1.2-2'}}">{{item.interests | number: '1.2-2'}}</div>
       </td>
@@ -11,10 +12,11 @@
       <td class="valueCell">{{pivotArr[ufund]['SUMNET'] | number:'1.2-2'}}</td>
       <td class="valueCell">{{pivotArr[ufund]['CAPITAL'] | number:'1.2-2'}}</td>
       <td class="valueCell">{{pivotArr[ufund]['VALUE'] | number:'1.2-2'}}</td>
-      <td nowrap><a target="_blank" href="{{fundURLS[r]}}">{{ufund}}</a></td>
+      <td nowrap><a target="_blank" href="{{fundDict[r]}}">{{fundDict[r].symbol}} {{fundDict[r].name}}</a></td>
       <!-- {{pivotArr[r][c]}} {{ufund}} {{udate}} !{{pivotArr[ufund][udate]}} -->
   </tr>
   <tr class="pivotTableFooterRow">
+      <td></td>
       <td class="valueCell">Total</td>
       <td *ngFor="let udate of uniqueDates2; let c=index" class="valueCell">{{pivotArr['SUM'][udate] | number:'1.2-2'}}</td>
       <td class="valueCell">{{total | number:'1.2-2'}}</td>
