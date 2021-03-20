@@ -96,7 +96,7 @@ export class FundMonthlyComponent implements OnInit {
 
     this.subscription = combineLatest(
         this.api.tfimeta$(filterSymbols),
-        this.api.tfimonthly$(filterSymbols, filterDate, period)
+        this.api.compare$(filterSymbols, filterDate, period)
     ).subscribe(([tfimetadata, tfimonthly]) => {
         this.tfimetadata = tfimetadata
         this.tfimonthly = tfimonthly.chartData

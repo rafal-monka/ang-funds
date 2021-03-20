@@ -123,7 +123,7 @@ export class FundCompareComponent implements OnInit {
         symbols.map((element, index)=> {
             let data = tfivalues[index].data
             let trend_lr = this.utils.calcLR(data)
-            console.log(tfivalues[index].name, trend_lr)
+            //console.log(tfivalues[index].name, trend_lr)
             let y0 = Math.round( (trend_lr.a * data[0][0] + trend_lr.b) *100)/100
             let yn = Math.round( (trend_lr.a * data[data.length-1][0] + trend_lr.b) *100)/100
 
