@@ -37,6 +37,10 @@ export class ApiService {
     return this.http.get(`/api/compare/values/${symbols}/${date}/${period}`);
   }
 
+  daysOfMonth$(symbols, date): Observable<any> {
+    return this.http.get(`/api/compare/days-of-month/${symbols}/${date}`);
+  }
+
   tfimeta$(symbol): Observable<any> {
     return this.http.get(`/api/tfi/metadata/${symbol}`);
   }
@@ -89,6 +93,9 @@ export class ApiService {
       }
   }
 
+  getHeatMap$(symbols, date): Observable<any> {
+    return this.http.get(`/api/time-series/heatmap/${symbols}/${date}`);
+  }
   // tficalclr$(symbol): Observable<any> {
   //   return this.http.get(`/api/tfi/calclr/${symbol}`);
   // }

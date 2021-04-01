@@ -8,10 +8,10 @@ import { RoiComponent } from './roi/roi.component'
 import { TfisComponent } from './tfis/tfis.component'
 import { TfismetaComponent } from './tfismeta/tfismeta.component'
 import { FundCompareComponent } from './fund-compare/fund-compare.component'
-import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component'
 import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component'
 import { RegisterComponent } from './register/register.component';
 import { AddRegisterComponent } from './register/add-register/add-register.component';
+import { HeatMapComponent } from './heat-map/heat-map.component';
 
 const routes: Routes = [
   { path: '', component: TfismetaComponent/*, canActivate: [AuthGuard]*/ },
@@ -20,9 +20,9 @@ const routes: Routes = [
   { path: 'roi', component: RoiComponent, canActivate: [AuthGuard] },
   { path: 'tfi/:symbol', component: TfisComponent, canActivate: [AuthGuard] },
   { path: 'funds', component: FundsComponent, canActivate: [AuthGuard] },
-  { path: 'compare/:symbols/:date', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
-  { path: 'monthly/:symbols/:date/:period', component: FundMonthlyComponent/*, canActivate: [AuthGuard]*/ },
-  { path: 'occasion/preview/:mode/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ }
+  { path: 'compare/:method/:symbols/:date/:period', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'occasion/preview/:mode/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'heatmap/:symbols/:date', component: HeatMapComponent/*, canActivate: [AuthGuard]*/ }
 ];
 
 @NgModule({

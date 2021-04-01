@@ -34,9 +34,9 @@
           &nbsp;<button class="btn btn-sm btn-danger" (click)="robotPick('R', '')">Pick</button>
 
           &nbsp;
-          &nbsp;&nbsp;<input [(ngModel)]="compareDate" placeholder="Date to compare" size="10" (change)="compare()">
-          &nbsp;<button class="btn btn-sm btn-info" (click)="compare()">Compare</button>
-          &nbsp;<button class="btn btn-sm btn-info" (click)="ampl()">Ampl</button>
+          &nbsp;&nbsp;<input [(ngModel)]="compareDate" placeholder="Date to compare" size="10">
+          &nbsp;<button class="btn btn-sm btn-info" (click)="compare('CHANGE', 'D')">Compare</button>
+          &nbsp;<button class="btn btn-sm btn-info" (click)="compare('AMPL', 'D')">Ampl</button>
       </div>
 
       <div style="margin-left: 2px; font-size: 10px;">

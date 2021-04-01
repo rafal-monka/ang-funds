@@ -1,0 +1,29 @@
+<div *ngIf="!ready">Please wait...</div>
+
+<div *ngIf="ready">
+<br/><input [(ngModel)]="filterText" placeholder="Filter..." size="100" (change)="filterTable()">
+
+    <table class="table table-sm" border=1>
+        <thead>
+            <tr><th>Nr</th><th>Fund</th><th *ngFor="let udate of heatMap.uniqueX; let c=index" nowrap><button (click)="sortTable(c)">{{udate.title}}</button></th><th>Fund</th></tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of pivotArrFiltered; let r=index">
+                <td>{{r+1}}</td>
+                <td nowrap>{{row[0]}}</td>
+                <td *ngFor="let cell of row.slice(1); let c=index" class="valueCell" [style.background-color]="cell.color">
+                    <!-- <div [style.background-color]="item[2]" *ngFor="let item of pivotArr[r][c]">{{item[1]}}</div> -->
+                    {{cell.change}}
+                </td>
+                <td nowrap>{{row[0]}}</td>
+            </tr>
+            <!-- <tr>
+              <td></td><td>Total</td>
+              <td *ngFor="let udate of heatMap.uniqueX; let c=index" class="valueCell">{{heatMap.pivotArrFilled[c][heatMap.pivotArrFilled[c].length-1]}}</td>
+              <td></td>
+              <td></td>
+            </tr> -->
+        </tbody>
+    </table>
+
+</div>

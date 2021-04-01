@@ -17,14 +17,14 @@ import { PivotTableLoComponent } from './components/pivot-table-lo/pivot-table-l
 import { TableLoComponent } from './components/table-lo/table-lo.component'
 import { Utils } from './utils';
 import { FundCompareComponent } from './fund-compare/fund-compare.component';
-import { FundMonthlyComponent } from './fund-monthly/fund-monthly.component';
 import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component';
 import { RegisterComponent } from './register/register.component';
 import { AddRegisterComponent } from './register/add-register/add-register.component';
 import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
+import { HeatMapComponent } from './heat-map/heat-map.component';
 
 @NgModule({
-   declarations: [
+   declarations: [	
       AppComponent,
       NavBarComponent,
       FundsComponent,
@@ -35,9 +35,9 @@ import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
       PivotTableLoComponent,
       TableLoComponent,
       FundCompareComponent,
-      FundMonthlyComponent,
       OccasionPreviewComponent,
-      RegisterComponent, AddRegisterComponent
+      RegisterComponent, AddRegisterComponent,
+      HeatMapComponent
    ],
    imports: [
       BrowserModule,

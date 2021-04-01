@@ -131,26 +131,26 @@ export class TfismetaComponent implements OnInit {
 }
 
   //open compare page
-  compare () {
+  compare (method, period) {
       let selectedArr = this.checkSelectedTFIs()
       if (selectedArr.length > 32) {
           alert('You can not compare more than 32 funds')
           return
       }
-      let urlParams = selectedArr.join(',')+'/'+this.compareDate
-      window.open('/compare/'+urlParams, "_blank");
+      let urlParams = selectedArr.join(',')+'/'+this.compareDate+'/'+period
+      window.open('/compare/'+method+'/'+urlParams, "_blank");
   }
 
   //open monthly/quarterly/yearly page
-  ampl() {
-      let selectedArr = this.checkSelectedTFIs()
-      if (selectedArr.length > 32) {
-          alert('You can not show more than 32 funds')
-          return
-      }
-      let urlParams = selectedArr.join(',')+'/'+this.compareDate+'/M'
-      window.open('/monthly/'+urlParams, "_blank");
-  }
+  // ampl() {
+  //     let selectedArr = this.checkSelectedTFIs()
+  //     if (selectedArr.length > 32) {
+  //         alert('You can not show more than 32 funds')
+  //         return
+  //     }
+  //     let urlParams = selectedArr.join(',')+'/'+this.compareDate+'/M'
+  //     window.open('/monthly/'+urlParams, "_blank");
+  // }
 
   tag() {
       //console.log(this.tagLabel)
