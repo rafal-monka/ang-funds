@@ -4417,4 +4417,6 @@ export const TFI_all = [
   {source: "BANKIER", symbol: "WIGTECH", name: "WIGTECH", type: "Generic", firm: "GPW"},
   {source: "BANKIER", symbol: "WIG-INFO", name: "WIG-INFORMATYKA", type: "Generic", firm: "GPW"},
   {source: "BANKIER", symbol: "WIG-TELKOM", name: "WIG-TELEKOMUNIKACJA", type: "Generic", firm: "GPW"},
+  {source: "BANKIER", symbol: "BETAM40TR", name: "BETAM40TR", type: "Generic", firm: "GPW"},
+  {source: "BANKIER", symbol: "ETFSP500", name: "ETFSP500", type: "Generic", firm: "GPW"}
 ]

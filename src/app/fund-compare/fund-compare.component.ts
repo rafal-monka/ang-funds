@@ -22,8 +22,10 @@ export class FundCompareComponent implements OnInit {
   filterSymbols: String
   filterDate: String  = new Date().toISOString().substring(0,10)
   period: String
-  method: String
+  method: string
   whetherAddLR: Boolean
+  mAShortTerm: number = 70
+  mALongTerm: number = 280
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router, public utils: Utils) { }
 
@@ -35,7 +37,7 @@ export class FundCompareComponent implements OnInit {
       this.filterDate = params['date']
       this.method = params['method']
       this.period = params['period']
-      this.chartType = (this.method === 'CHANGE') ? 'line' : 'column'
+      this.chartType = (['CHANGE','VALUE'].indexOf(this.method)>-1) ? 'line' : 'column'
       this.refresh()
     })
 
@@ -43,6 +45,20 @@ export class FundCompareComponent implements OnInit {
 
   refresh() {
     this.refreshData(this.filterSymbols, this.filterDate, this.method, this.period)
+  }
+
+  private setChartFull(type, series) {
+    Highcharts.chart('chart', {
+      chart: {
+          type: type,
+          zoomType: 'xy'
+      },
+      title: {
+          text: '...'
+      },
+      series: series
+    }
+    )
   }
 
   private setChart(series, period, type) {
@@ -122,6 +138,63 @@ export class FundCompareComponent implements OnInit {
     let startDate = new Date(filterDate)
 
     switch (method) {
+        case 'VALUE':
+          this.subscription = combineLatest(
+              this.api.tfimeta$(filterSymbols),
+              this.api.tfivalues$(filterSymbols)
+              //includeCbonds ? this.api.cbondsData$(filterDate) : new Promise(async function(resolve, reject) {resolve(null)})
+              //this.api.tfimeta$(symbol2),
+              //this.api.tfivalues$(symbol2),
+          ).subscribe(([tfimetadata, tfivalues/*, tficompared , cbonds, tfimeta2, tfivalues2*/]) => {
+              this.tfimetadata = tfimetadata
+              let tfivaluesFullData = JSON.parse(JSON.stringify(tfivalues))
+
+              tfivalues.forEach((item, index) => {
+                tfivalues[index].symbol = tfivalues[index].name
+                tfivalues[index].name = tfivalues[index].name+'|'+this.tfimetadata.filter(item => item.symbol === tfivalues[index].name)[0].name
+              })
+
+              //iterate
+              symbols.forEach((element, index) => {
+                // console.log('element', this.tfimetadata.filter(item => item.symbol === element.symbol))
+                  try {
+                    tfivalues[index].data = tfivalues[index].data.filter(item => {
+                        return item[0] >= startDate
+                    })
+                  } catch (e) {
+                      console.log('Error', element, e)
+                  }
+              })
+
+              //add moving avarages
+              let CONST_DAYS = [this.mAShortTerm, this.mALongTerm]
+              let termArrDays = CONST_DAYS.map(item => item * 24*60*60*1000)
+
+              tfivalues.forEach((item, tfi_ind) => {
+                  //short term
+                  tfivalues.push( {
+                      name: 'MA-'+CONST_DAYS[0]+'-'+tfi_ind,
+                      color: 'green',
+                      data: tfivalues[tfi_ind].data.map((item, inx) => [
+                          item[0],
+                          Math.round( tfivaluesFullData[tfi_ind].data.filter(itemFull => ((itemFull[0] >= item[0]-termArrDays[0]) && (itemFull[0] <= item[0])) ).reduce((total, val) => total+val[1], 0) / CONST_DAYS[0] * 100)/100
+                      ])
+                  })
+                  //long term
+                  tfivalues.push( {
+                      name: 'MA-'+CONST_DAYS[1]+'-'+tfi_ind,
+                      color: 'red',
+                      data: tfivalues[tfi_ind].data.map((item, inx) => [
+                          item[0],
+                          Math.round( tfivaluesFullData[tfi_ind].data.filter(itemFull => ((itemFull[0] >= item[0]-termArrDays[1]) && (itemFull[0] <= item[0])) ).reduce((total, val) => total+val[1], 0) / CONST_DAYS[1] * 100)/100
+                      ])
+                  })
+              })
+
+              this.setChart(tfivalues, period, this.chartType)
+          })
+          break;
+
         case 'CHANGE':
           this.subscription = combineLatest(
             this.api.tfimeta$(filterSymbols),
@@ -231,7 +304,8 @@ export class FundCompareComponent implements OnInit {
                   ])
                 }
             })
-            this.setChart(cum, 'NA', 'line')
+            //this.setChart(cum, 'NA', 'line')
+            this.setChartFull('scatter', daysOfMonth.dataByDays)
           })
           break;
 

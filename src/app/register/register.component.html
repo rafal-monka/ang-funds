@@ -34,8 +34,86 @@
         </ng-template>
     </ngb-tab>
 
+    <ngb-tab title="Total">
+        <ng-template ngbTabContent>
+
+            <div  class="tab">
+                <highcharts-chart
+                  id="totalValueChart"
+                  [Highcharts]="Highcharts"
+                  style="height: 400px; display: block; border: 1px solid lightgrey">
+                </highcharts-chart>
+
+                <br>
+                <table class="dataTable table-striped">
+                    <thead>
+                        <tr><th>Class</th><th>Capital</th><th>Cap%</th><th>Value</th><th>Val%</th><th>Gain (gross)</th><th>Yield%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataTotalClass" class="dataRow">
+                            <td>{{item.name}}</td>
+                            <td class="valueCell">{{item.totalCapital | number:'1.2-2'}}</td>
+                            <td class="valueCell">{{item.y2 | number:'1.2-2'}}%</td>
+                            <td class="valueCell">{{item.totalValn | number:'1.2-2'}}</td>
+                            <td class="valueCell">{{item.y | number:'1.2-2'}}%</td>
+                            <td class="valueCell">{{item.gain | number:'1.2-2'}}</td>
+                            <td class="valueCell">{{item.yield | number:'1.2-2'}}%</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td class="valueCell">{{sumTotalCapital | number:'1.2-2'}}</td>
+                            <td class="valueCell">{{sumTotalY2Class | number:'1.2-2'}}%</td>
+                            <td class="valueCell">{{sumTotalValn | number:'1.2-2'}}</td>
+                            <td class="valueCell">{{sumTotalYClass | number:'1.2-2'}}%</td>
+                            <td class="valueCell">{{(sumTotalValn - sumTotalCapital) | number:'1.2-2'}}</td>
+                            <td class="valueCell">{{((sumTotalValn - sumTotalCapital)/sumTotalCapital)*100 | number:'1.2-2'}}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <table class="dataTable table-striped">
+                  <thead>
+                      <tr><th>Class</th><th>Fund</th><th>Capital</th><th>Cap%</th><th>Value</th><th>Val%</th><th>Gain (gross)</th><th>Yield%</th></tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of dataTotalFund" class="dataRow">
+                          <td>{{item.fundClass}}</td>
+                          <td>{{item.name}}</td>
+                          <td class="valueCell">{{item.totalCapital | number:'1.2-2'}}</td>
+                          <td class="valueCell">{{item.y2 | number:'1.2-2'}}%</td>
+                          <td class="valueCell">{{item.totalValn | number:'1.2-2'}}</td>
+                          <td class="valueCell">{{item.y | number:'1.2-2'}}%</td>
+                          <td class="valueCell">{{item.gain | number:'1.2-2'}}</td>
+                          <td class="valueCell">{{item.yield | number:'1.2-2'}}%</td>
+                      </tr>
+                      <tr>
+                          <td colspan="2">Total</td>
+                          <td class="valueCell">{{sumTotalCapital | number:'1.2-2'}}</td>
+                          <td class="valueCell">{{sumTotalY2Class | number:'1.2-2'}}%</td>
+                          <td class="valueCell">{{sumTotalValn | number:'1.2-2'}}</td>
+                          <td class="valueCell">{{sumTotalYClass | number:'1.2-2'}}%</td>
+                          <td class="valueCell">{{(sumTotalValn - sumTotalCapital) | number:'1.2-2'}}</td>
+                          <td class="valueCell">{{((sumTotalValn - sumTotalCapital)/sumTotalCapital)*100 | number:'1.2-2'}}%</td>
+                      </tr>
+                  </tbody>
+              </table>
+
+                <pre>
+                  {{dataTotalClass | json}}
+                </pre>
+                <pre>
+                  {{dataTotalFund | json}}
+                </pre>
+
+              </div>
+
+        </ng-template>
+    </ngb-tab>
+
 </ngb-tabset>
 <br>
+
 
 <!-- <highcharts-chart
   id="chart"

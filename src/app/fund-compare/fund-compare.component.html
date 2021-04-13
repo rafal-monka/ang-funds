@@ -8,10 +8,10 @@
 <input [(ngModel)]="filterDate" placeholder="Filter from Date" size="10">
 &nbsp;
 <select [(ngModel)]="period">
-  <option value="Y">year</option>
-  <option value="Q">quarter</option>
-  <option value="M">month</option>
-  <option value="D">day</option>
+    <option value="Y">year</option>
+    <option value="Q">quarter</option>
+    <option value="M">month</option>
+    <option value="D">day</option>
 </select>
 &nbsp;
 
@@ -19,14 +19,20 @@
 
 &nbsp;
 <select [(ngModel)]="chartType">
-  <option value="column">column</option>
-  <option value="line">line</option>
+    <option value="column">column</option>
+    <option value="line">line</option>
 </select>
 
 &nbsp;
 <label>Add LR
-  <input type="checkbox" [(ngModel)]="whetherAddLR"/>
+    <input type="checkbox" [(ngModel)]="whetherAddLR"/>
 </label>
+
+<span *ngIf="method==='VALUE'">
+    &nbsp;
+    <input [(ngModel)]="mAShortTerm" placeholder="MA-short" size="3">
+    <input [(ngModel)]="mALongTerm" placeholder="MA-long" size="3">
+</span>
 
 <highcharts-chart
     id="chart"
