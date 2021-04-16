@@ -15,6 +15,7 @@ import { TfismetaComponent } from './tfismeta/tfismeta.component';
 import { PivotTableComponent } from './components/pivot-table/pivot-table.component'
 import { PivotTableLoComponent } from './components/pivot-table-lo/pivot-table-lo.component'
 import { TableLoComponent } from './components/table-lo/table-lo.component'
+import { TotalTableComponent } from './components/total-table/total-table.component'
 import { Utils } from './utils';
 import { FundCompareComponent } from './fund-compare/fund-compare.component';
 import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component';
@@ -24,7 +25,7 @@ import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 import { HeatMapComponent } from './heat-map/heat-map.component';
 
 @NgModule({
-   declarations: [	
+   declarations: [
       AppComponent,
       NavBarComponent,
       FundsComponent,
@@ -34,6 +35,7 @@ import { HeatMapComponent } from './heat-map/heat-map.component';
       PivotTableComponent,
       PivotTableLoComponent,
       TableLoComponent,
+      TotalTableComponent,
       FundCompareComponent,
       OccasionPreviewComponent,
       RegisterComponent, AddRegisterComponent,

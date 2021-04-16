@@ -17,14 +17,18 @@ export class RegisterComponent implements OnInit {
   unique_registers: Array<any>
   groupedUR: Array<any> = [[]]
   groupedArr: Array<any> = [[]]
+
   dataTotalClass: Array<any>
   dataTotalFund: Array<any>
+  dataTotalTFI: Array<any>
   sumTotalCapital: number
   sumTotalValn: number
-  sumTotalYClass: number
-  sumTotalY2Class: number
-  sumTotalYFund: number
-  sumTotalY2Fund: number
+  sumTotalGain: number
+
+  // sumTotalYClass: number
+  // sumTotalY2Class: number
+  // sumTotalYFund: number
+  // sumTotalY2Fund: number
 
   message: any
   fundClasses : Array<any> = ['A','A+','B','C','D']
@@ -142,6 +146,19 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+
+      function calc(tot, sumTotalCapital, sumTotalValn, sumTotalGain) {
+          return {
+              name: (tot.fundClass!==undefined?'['+tot.fundClass+'] ':'')+tot.name,
+              y:  tot.sumValn / sumTotalValn * 100,
+              y2: tot.sumCapital / sumTotalCapital * 100,
+              y3: (tot.sumValn-tot.sumCapital) / sumTotalGain * 100,
+              sumValn:  tot.sumValn,
+              sumCapital:  tot.sumCapital,
+              gain:  Math.round( (tot.sumValn-tot.sumCapital) * 100)/100,
+              yield:  Math.round( (tot.sumValn-tot.sumCapital)/tot.sumValn*100 * 100)/100,
+          }
+      }
       const URL_ANALIZY_ONLINE = 'https://www.analizy.pl'
       const PIVOT_TABLE_PERIOD = 'M' //default monhtly
 
@@ -184,65 +201,66 @@ export class RegisterComponent implements OnInit {
                   this.setChartLO('chartLO'+this.fundClasses[c], 'Threshold '+this.lineOfDefence[c][0].threshold, this.lineOfDefence[c], 0.25)
               }
 
-              //total
+              //calculate total (gropued by 3 separete criteria: class, TFI, fund)
+              let unique_TFI = [...new Set(this.unique_registers.map(item => item.name.substring(0, item.name.indexOf(' '))))]
+              //add name
+              registers.groupedArr = registers.groupedArr.map(item => ({
+                ...item,
+                name: this.unique_registers.find(ur => ur.symbol === item.symbol).name
+              }))
+
               this.sumTotalValn = 0
               this.sumTotalCapital = 0
-              let totalPositionsClass = this.fundClasses.map(item => ({name: item, y:0, totalCapital: 0, totalValn: 0}))
-              let totalPositionsFund = this.unique_registers.map(item => ({...item, y:0, totalCapital: 0, totalValn: 0}))
+              this.sumTotalGain = 0
+              let totalPositionsClass = this.fundClasses.map(item => ({name: item, y:0, sumCapital: 0, sumValn: 0}))
+              let totalPositionsFund = this.unique_registers.map(item => ({...item, y:0, sumCapital: 0, sumValn: 0}))
+// console.log(totalPositionsFund)
+              let totalPositionsTFI = unique_TFI.map(item => ({name: item, y:0, sumCapital: 0, sumValn: 0}))
               registers.groupedArr.filter(reg => reg.date === "9999-12-31").forEach(position => {
-                  let posClass = totalPositionsClass.find(ureg => ureg.name === position.fundClass)
-                  let posFund = totalPositionsFund.find(ureg => ureg.symbol === position.symbol)
-                  posClass.totalCapital += position.capital
-                  posClass.totalValn += position.valn
+                  let posClass = totalPositionsClass.find(tp => tp.name === position.fundClass)
+                  let posFund = totalPositionsFund.find(tp => tp.symbol === position.symbol)
+                  let posTFI = totalPositionsTFI.find(tp => tp.name === position.name.substring(0, position.name.indexOf(' ')))
+                  posClass.sumCapital += position.capital
+                  posClass.sumValn += position.valn
 
-                  posFund.totalCapital += position.capital
-                  posFund.totalValn += position.valn
+                  posFund.sumCapital += position.capital
+                  posFund.sumValn += position.valn
 
-                  this.sumTotalValn += position.valn
+                  posTFI.sumCapital += position.capital
+                  posTFI.sumValn += position.valn
+
                   this.sumTotalCapital += position.capital
+                  this.sumTotalValn += position.valn
+                  this.sumTotalGain += (position.valn - position.capital)
               })
-              let totalClass = totalPositionsClass
-              let totalFund = totalPositionsFund.sort((a,b) => (a.fundClass === b.fundClass) ? (b.totalValn - a.totalValn) : (a.fundClass > b.fundClass ? 1 : -1) )
 
-              this.dataTotalClass = totalClass.map(tot => ({
-                  name: tot.name,
-                  y: Math.round( tot.totalValn / this.sumTotalValn * 100 * 100)/100,
-                  y2: Math.round( tot.totalCapital / this.sumTotalCapital * 100 * 100)/100,
-                  totalValn: Math.round( tot.totalValn * 100)/100,
-                  totalCapital: Math.round( tot.totalCapital * 100)/100,
-                  gain: Math.round( (tot.totalValn-tot.totalCapital) * 100)/100,
-                  yield: Math.round( (tot.totalValn-tot.totalCapital)/tot.totalValn*100 * 100)/100,
-              })).sort( (a,b) => b.y - a.y)
-              this.sumTotalYClass = this.dataTotalClass.reduce((t,i)=>t+i.y,0)
-              this.sumTotalY2Class = this.dataTotalClass.reduce((t,i)=>t+i.y2,0)
-
-              this.dataTotalFund = totalFund.map(tot => ({
-                name: tot.name,
-                fundClass: tot.fundClass,
-                y: Math.round( tot.totalValn / this.sumTotalValn * 100 * 100)/100,
-                y2: Math.round( tot.totalCapital / this.sumTotalCapital * 100 * 100)/100,
-                totalValn: Math.round( tot.totalValn * 100)/100,
-                totalCapital: Math.round( tot.totalCapital * 100)/100,
-                gain: Math.round( (tot.totalValn-tot.totalCapital) * 100)/100,
-                yield: Math.round( (tot.totalValn-tot.totalCapital)/tot.totalValn*100 * 100)/100,
-              })).sort( (a,b) => b.y - a.y)
-              this.sumTotalYFund = this.dataTotalFund.reduce((t,i)=>t+i.y,0)
+              //per class, fund, TFI
+              this.dataTotalClass = totalPositionsClass.map(tot => calc(tot, this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.y - a.y)
+              this.dataTotalFund = totalPositionsFund.map(tot => calc(tot,  this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.y - a.y)
+              this.dataTotalTFI = totalPositionsTFI.map(tot => calc(tot,  this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.y - a.y)
 
 //              console.log(dataTotalFund)
 
               let totalSeries = [{
                   name: 'Class',
                   type: 'pie',
-                  center: [300, 150],
-                  size: 250,
+                  center: [150, 150],
+                  size: 120,
                   data: this.dataTotalClass
                 },
                 {
                   name: 'Fund',
                   type: 'pie',
-                  center: [1000, 150],
-                  size: 250,
+                  center: [700, 150],
+                  size: 200,
                   data: this.dataTotalFund
+                },
+                {
+                  name: 'TFI',
+                  type: 'pie',
+                  center: [1300, 150],
+                  size: 120,
+                  data: this.dataTotalTFI
               }]
 
               this.setPieChart('totalValueChart', totalSeries)

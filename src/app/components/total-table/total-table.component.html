@@ -1,0 +1,28 @@
+<table class="dataTable table-striped">
+  <thead>
+      <tr><th>No</th><th style="text-align: left;">Name</th><th>Capital</th><th>Cap%</th><th>Value</th><th>Val%</th><th>Gain (gross)</th><th>Gain%</th><th>Yield%</th></tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let item of table; let i=index" class="dataRow">
+          <td>{{i+1}}.</td>
+          <td>{{item.name}}</td>
+          <td class="valueCell valueAmount" [attr.data-amount]="item.sumCapital | number:'1.0-0'"></td>
+          <td class="valueCell valueSlice" [attr.data-amount]="item.y2 | number:'1.2-2'"></td>
+          <td class="valueCell valueAmount" [attr.data-amount]="item.sumValn | number:'1.0-0'"></td>
+          <td class="valueCell valueSlice" [attr.data-amount]="item.y | number:'1.2-2'"></td>
+          <td class="valueCell valueAmount" [attr.data-amount]="item.gain | number:'1.0-0'"></td>
+          <td class="valueCell valueSlice" [attr.data-amount]="item.y3 | number:'1.2-2'"></td>
+          <td class="valueCell valueInterest" [attr.data-amount]="item.yield | number:'1.2-2'"></td>
+      </tr>
+      <tr style="font-weight: bold;">
+          <td colspan="2">Total</td>
+          <td class="valueCell valueAmount" [attr.data-amount]="totalCapital | number:'1.0-0'"></td>
+          <td class="valueCell valueSlice" [attr.data-amount]="totalY2 | number:'1.2-2'"></td>
+          <td class="valueCell valueAmount" [attr.data-amount]="totalValn | number:'1.0-0'"></td>
+          <td class="valueCell valueSlice" [attr.data-amount]="totalY | number:'1.2-2'"></td>
+          <td class="valueCell valueAmount" [attr.data-amount]="totalGain | number:'1.0-0'"></td>
+          <td class="valueCell valueSlice" [attr.data-amount]="totalY3 | number:'1.2-2'"></td>
+          <td class="valueCell valueInterest" [attr.data-amount]="totalYield | number:'1.2-2'"></td>
+      </tr>
+  </tbody>
+</table>

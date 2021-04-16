@@ -304,8 +304,8 @@ export class FundCompareComponent implements OnInit {
                   ])
                 }
             })
-            //this.setChart(cum, 'NA', 'line')
-            this.setChartFull('scatter', daysOfMonth.dataByDays)
+            this.setChart(cum, 'NA', 'line')
+            //this.setChartFull('scatter', daysOfMonth.dataByDays)
           })
           break;
 
