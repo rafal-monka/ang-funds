@@ -4418,5 +4418,82 @@ export const TFI_all = [
   {source: "BANKIER", symbol: "WIG-INFO", name: "WIG-INFORMATYKA", type: "Generic", firm: "GPW"},
   {source: "BANKIER", symbol: "WIG-TELKOM", name: "WIG-TELEKOMUNIKACJA", type: "Generic", firm: "GPW"},
   {source: "BANKIER", symbol: "BETAM40TR", name: "BETAM40TR", type: "Generic", firm: "GPW"},
-  {source: "BANKIER", symbol: "ETFSP500", name: "ETFSP500", type: "Generic", firm: "GPW"}
+  {source: "BANKIER", symbol: "ETFSP500", name: "ETFSP500", type: "Generic", firm: "GPW"},
+  //ETF
+	//MSCI developed markets
+	{
+		source: "ETFEOD", symbol: "SWDA.LSE",
+		name: "ISHARES CORE MSCI WORLD UCITS (LSE)",
+		href: "https://pl.investing.com/etfs/ishares-msci-world---acc?cid=995447",
+		type: "ETF/Akcyjne",
+		firm: "IE00B4L5Y983",
+		info: "akcji globalnych rynków rozwiniętych"
+	},
+	{
+		source: "ETFEOD", symbol: "EUNL.XETRA",
+		name: "ISHARES CORE MSCI WORLD UCITS (XETRA)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00B4L5Y983",
+		info: "akcji globalnych rynków rozwiniętych"
+	},
+	//MSCI EM
+	{
+		source: "ETFEOD", symbol: "EMIM.LSE",
+		name: "ISHARES CORE MSCI EM IMI UCITS (LSE)",
+		href: "https://pl.investing.com/etfs/ishares-core-msci-em-imi?cid=994133",
+		type: "ETF/Akcyjne",
+		firm: "IE00BKM4GZ66",
+		info: "akcji globalnych rynków EM"
+	},
+	{
+		source: "ETFEOD", symbol: "IS3N.XETRA",
+		name: "ISHARES CORE MSCI EM IMI UCITS (XETRA)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00BKM4GZ66",
+		info: "akcji globalnych rynków EM"
+	},
+	//MSCI MIN volatility developed markets
+	{
+		source: "ETFEOD", symbol: "MINV.LSE",
+		name: "ISHARES EDGE MSCI WORLD MINIMUM VOLATILITY UCITS (LSE)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00B8FHGS14",
+		info: "akcji globalnych rynków rozwiniętych"
+	},
+	{
+		source: "ETFEOD", symbol: "IQQ0.XETRA",
+		name: "ISHARES EDGE MSCI WORLD MINIMUM VOLATILITY UCITS (XETRA)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00B8FHGS14",
+		info: "akcji globalnych rynków rozwiniętych"
+	},
+  //General
+  {
+		source: "ETFEOD", symbol: "GSPC.INDX",
+		name: "S&P500",
+		href: "",
+		type: "Exchange",
+		firm: "",
+		info: "akcji USA"
+	},
+  {
+		source: "ETFEOD", symbol: "IXIC.INDX",
+		name: "NASDAQ Composite",
+		href: "",
+		type: "Exchange",
+		firm: "",
+		info: "akcji USA"
+	},
+  {
+		source: "ETFEOD", symbol: "DJI.INDX",
+		name: "Dow Jones Industrial Average",
+		href: "",
+		type: "Exchange",
+		firm: "",
+		info: "akcji USA"
+	}
 ]

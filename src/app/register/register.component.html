@@ -53,9 +53,21 @@
                 <br>
                 <app-total-table [table]="dataTotalFund"></app-total-table>
 
-              </div>
+                <br>Spis:
+                <table border="1">
+                  <tr *ngFor="let f of dataTotalFund; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{f.symbol}}</td>
+                    <td>{{f.name}}</td>
+                    <td>{{f.sumCapital  | number:'1.0-0'}}</td>
+                  </tr>
+
+                </table>
+
+            </div>
 
         </ng-template>
+
     </ngb-tab>
 
 </ngb-tabset>

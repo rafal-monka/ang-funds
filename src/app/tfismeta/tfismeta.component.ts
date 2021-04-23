@@ -203,7 +203,7 @@ export class TfismetaComponent implements OnInit {
           console.log('tag', tag)
           this.TFIs_filtered = this.TFIs_filtered.filter(tfi => tfi.metadata.tags && tfi.metadata.tags.indexOf(tag) >-1 )
       } else {
-          this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterName !== '' && (tfi.name.toUpperCase().indexOf(filterNameUC) >-1 || tfi.symbol.toUpperCase().indexOf(filterNameUC) >-1 || tfi.type.toUpperCase().indexOf(filterNameUC) >-1 || tfi.firm.toUpperCase().indexOf(filterNameUC) >-1) || this.filterName === '')
+          this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterName !== '' && (tfi.name.toUpperCase().indexOf(filterNameUC) >-1 || tfi.symbol.toUpperCase().indexOf(filterNameUC) >-1 || tfi.type.toUpperCase().indexOf(filterNameUC) >-1 || tfi.firm.toUpperCase().indexOf(filterNameUC) >-1 || tfi.source.toUpperCase().indexOf(filterNameUC) >-1) || this.filterName === '')
       }
       //this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterMyTFI && (this.MY_TFI.indexOf(tfi.symbol) >-1) || this.filterMyTFI===false)
       this.TFIs_filtered = this.TFIs_filtered.filter(tfi => this.filterLook && (tfi.metadata.look > 0) || this.filterLook===false)

@@ -150,6 +150,7 @@ export class RegisterComponent implements OnInit {
       function calc(tot, sumTotalCapital, sumTotalValn, sumTotalGain) {
           return {
               name: (tot.fundClass!==undefined?'['+tot.fundClass+'] ':'')+tot.name,
+              symbol: tot.symbol,
               y:  tot.sumValn / sumTotalValn * 100,
               y2: tot.sumCapital / sumTotalCapital * 100,
               y3: (tot.sumValn-tot.sumCapital) / sumTotalGain * 100,
