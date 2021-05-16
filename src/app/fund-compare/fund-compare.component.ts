@@ -24,8 +24,8 @@ export class FundCompareComponent implements OnInit {
   period: String
   method: string
   whetherAddLR: Boolean
-  mAShortTerm: number = 70
-  mALongTerm: number = 280
+  mAShortTerm: number = 30
+  mALongTerm: number = 100
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router, public utils: Utils) { }
 
@@ -175,19 +175,26 @@ export class FundCompareComponent implements OnInit {
                   tfivalues.push( {
                       name: 'MA-'+CONST_DAYS[0]+'-'+tfi_ind,
                       color: 'green',
-                      data: tfivalues[tfi_ind].data.map((item, inx) => [
-                          item[0],
-                          Math.round( tfivaluesFullData[tfi_ind].data.filter(itemFull => ((itemFull[0] >= item[0]-termArrDays[0]) && (itemFull[0] <= item[0])) ).reduce((total, val) => total+val[1], 0) / CONST_DAYS[0] * 100)/100
-                      ])
+                      data: tfivalues[tfi_ind].data.map((item, inx) => {
+                          let prevArr = tfivaluesFullData[tfi_ind].data.filter(itemFull => ((itemFull[0] >= item[0]-termArrDays[0]) && (itemFull[0] <= item[0])) )
+                          return [
+                              item[0],
+                              //item[1]*0.99
+                              Math.round( prevArr.reduce((total, val) => total+val[1], 0) / prevArr.length * 100)/100
+                          ]
+                    })
                   })
                   //long term
                   tfivalues.push( {
                       name: 'MA-'+CONST_DAYS[1]+'-'+tfi_ind,
                       color: 'red',
-                      data: tfivalues[tfi_ind].data.map((item, inx) => [
-                          item[0],
-                          Math.round( tfivaluesFullData[tfi_ind].data.filter(itemFull => ((itemFull[0] >= item[0]-termArrDays[1]) && (itemFull[0] <= item[0])) ).reduce((total, val) => total+val[1], 0) / CONST_DAYS[1] * 100)/100
-                      ])
+                      data: tfivalues[tfi_ind].data.map((item, inx) => {
+                          let prevArr = tfivaluesFullData[tfi_ind].data.filter(itemFull => ((itemFull[0] >= item[0]-termArrDays[1]) && (itemFull[0] <= item[0])) )
+                          return [
+                              item[0],
+                              Math.round( prevArr.reduce((total, val) => total+val[1], 0) /prevArr.length * 100)/100
+                          ]
+                    })
                   })
               })
 

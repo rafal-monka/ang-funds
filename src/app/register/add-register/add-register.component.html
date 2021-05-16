@@ -2,7 +2,7 @@
   New operation
 </p>
 <div>
-  <input type="radio"
+  <!-- <input type="radio"
     id="radioTypeP"
     name="type"
     value="P"
@@ -19,13 +19,14 @@
     [(ngModel)]="type" />
   <label class="form-check-label" for="radioTypeR">
     Redeem
-  </label>
+  </label> -->
 
   <br>
-  <textarea rows="10" cols="100" (change)="doTextareaValueChange($event)">{{data}}</textarea>
+  <textarea rows="10" cols="100"
+     (change)="doTextareaValueChange($event)" style="font-family: 'Courier New', Courier, monospace;">{{data}}</textarea>
   <br>
 
   <button class="btn btn-success" (click)="saveData()">Save</button>
   <br>
-  <pre>{{result}}</pre>
+  <pre>{{result | json}}</pre>
 </div>

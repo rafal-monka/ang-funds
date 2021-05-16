@@ -236,9 +236,9 @@ export class RegisterComponent implements OnInit {
               })
 
               //per class, fund, TFI
-              this.dataTotalClass = totalPositionsClass.map(tot => calc(tot, this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.y - a.y)
-              this.dataTotalFund = totalPositionsFund.map(tot => calc(tot,  this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.y - a.y)
-              this.dataTotalTFI = totalPositionsTFI.map(tot => calc(tot,  this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.y - a.y)
+              this.dataTotalClass = totalPositionsClass.map(tot => calc(tot, this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.sumValn - a.sumValn)
+              this.dataTotalFund = totalPositionsFund.map(tot => calc(tot,  this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.sumValn - a.sumValn)
+              this.dataTotalTFI = totalPositionsTFI.map(tot => calc(tot,  this.sumTotalCapital, this.sumTotalValn, this.sumTotalGain)).sort( (a,b) => b.sumValn - a.sumValn)
 
 //              console.log(dataTotalFund)
 

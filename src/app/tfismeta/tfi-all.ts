@@ -4454,6 +4454,40 @@ export const TFI_all = [
 		firm: "IE00BKM4GZ66",
 		info: "akcji globalnych rynków EM"
 	},
+  //FTSE Developed World
+	{
+		source: "ETFEOD", symbol: "VHVE.LSE",
+		name: "VANGUARD FTSE DEVELOPED WORLD UCITS ETF USD (LSE)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00BK5BQV03",
+		info: "akcji globalnych rynków rozwiniętych"
+	},
+	{
+		source: "ETFEOD", symbol: "VGVF.XETRA",
+		name: "VANGUARD FTSE DEVELOPED WORLD UCITS ETF USD (XETRA)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00BK5BQV03",
+		info: "akcji globalnych rynków rozwiniętych"
+	},
+	//FTSE EM
+	{
+		source: "ETFEOD", symbol: "VFEA.LSE",
+		name: "VANGUARD FTSE EMERGING MARKETS UCITS ETF USD (LSE)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00BK5BR733",
+		info: "akcji globalnych rynków EM"
+	},
+	{
+		source: "ETFEOD", symbol: "VFEA.XETRA",
+		name: "VANGUARD FTSE EMERGING MARKETS UCITS ETF USD (XETRA)",
+		href: "",
+		type: "ETF/Akcyjne",
+		firm: "IE00BK5BR733",
+		info: "akcji globalnych rynków EM"
+	},
 	//MSCI MIN volatility developed markets
 	{
 		source: "ETFEOD", symbol: "MINV.LSE",

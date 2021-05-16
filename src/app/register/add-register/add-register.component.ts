@@ -7,26 +7,28 @@ import { ApiService } from '../../api.service';
   styleUrls: ['./add-register.component.css']
 })
 export class AddRegisterComponent implements OnInit {
-  data: String = ''
-  result: String
-  type: String = 'P' //purchase
+  data: string = ''
+  result: string
+  //type: string = 'P' //purchase
 
   constructor(private api: ApiService) { }
 
   doTextareaValueChange(ev) {
     try {
       this.data = ev.target.value;
+
     } catch(e) {
       console.info('could not set textarea-value');
     }
   }
 
   saveData() {
-    if (confirm('Are you sure? Type: '+this.type)) {
+    let type = JSON.parse(this.data).redemption !== undefined ? "R" : "P"
+    if (confirm('Are you sure? Type: '+type)) {
       console.log(this.data)
       let body = this.data
-      this.api.postRegisters$(body, this.type).subscribe(result => {
-        this.result = JSON.stringify(result)
+      this.api.postRegisters$(body, type).subscribe(result => {
+        this.result = result
       })
     }
   }
