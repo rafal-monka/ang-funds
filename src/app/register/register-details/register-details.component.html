@@ -1,0 +1,18 @@
+<table border=1>
+  <tr *ngFor="let reg of registersActive; let r=index">
+    <td>{{reg.symbol}}</td>
+    <td>{{reg.fname}}</td>
+    <td>{{reg.name}}</td>
+    <td>{{reg.units}}</td>
+    <td>{{reg.price}}</td>
+    <td>{{reg.distibutor}}</td>
+    <td>{{reg.date | date:'mediumDate'}}</td>
+    <td>{{reg.fromDate | date:'mediumDate'}}</td>
+    <!-- <td>{{reg.toDate | date:'mediumDate'}}</td> -->
+    <td>{{reg.status}}</td>
+    <td>{{reg.valn}}</td>
+    <td>{{reg.daten | date:'mediumDate'}}</td>
+    <td>{{(reg.units * reg.valn) | number:'1.2-2'}}</td>
+  </tr>
+</table>
+<!-- {{registersActive | json}} -->

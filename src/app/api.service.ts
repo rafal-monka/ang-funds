@@ -83,6 +83,10 @@ export class ApiService {
     return this.http.get(`/api/units/register/${period}/*`);
   }
 
+  getRegistersFull$(date): Observable<any> {
+    return this.http.get(`/api/units/register-full/${date}`);
+  }
+
   postRegisters$(object, type): Observable<any> {
       const headers = new HttpHeaders().set("Content-Type", "application/json");
       switch (type.toUpperCase()) {

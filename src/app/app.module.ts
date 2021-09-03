@@ -21,6 +21,8 @@ import { FundCompareComponent } from './fund-compare/fund-compare.component';
 import { OccasionPreviewComponent } from './occasion-preview/occasion-preview.component';
 import { RegisterComponent } from './register/register.component';
 import { AddRegisterComponent } from './register/add-register/add-register.component';
+import { RegisterDetailsComponent } from './register/register-details/register-details.component';
+
 import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 import { HeatMapComponent } from './heat-map/heat-map.component';
 
@@ -38,7 +40,7 @@ import { HeatMapComponent } from './heat-map/heat-map.component';
       TotalTableComponent,
       FundCompareComponent,
       OccasionPreviewComponent,
-      RegisterComponent, AddRegisterComponent,
+      RegisterComponent, AddRegisterComponent, RegisterDetailsComponent,
       HeatMapComponent
    ],
    imports: [
