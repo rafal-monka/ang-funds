@@ -25,9 +25,10 @@ import { RegisterDetailsComponent } from './register/register-details/register-d
 
 import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 import { HeatMapComponent } from './heat-map/heat-map.component';
+import { EtfValueRateComponent } from './etf-value-rate/etf-value-rate.component';
 
 @NgModule({
-   declarations: [
+   declarations: [	
       AppComponent,
       NavBarComponent,
       FundsComponent,
@@ -41,7 +42,8 @@ import { HeatMapComponent } from './heat-map/heat-map.component';
       FundCompareComponent,
       OccasionPreviewComponent,
       RegisterComponent, AddRegisterComponent, RegisterDetailsComponent,
-      HeatMapComponent
+      HeatMapComponent,
+      EtfValueRateComponent
    ],
    imports: [
       BrowserModule,

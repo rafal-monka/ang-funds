@@ -103,4 +103,8 @@ export class ApiService {
   // tficalclr$(symbol): Observable<any> {
   //   return this.http.get(`/api/tfi/calclr/${symbol}`);
   // }
+
+  getCurrencyRates$(symbol, dateFrom, dateTo): Observable<any> {
+    return this.http.get(`https://api.nbp.pl/api/exchangerates/rates/a/${symbol}/${dateFrom}/${dateTo}/?format=json`);
+  }
 }

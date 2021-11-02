@@ -3840,6 +3840,14 @@ export const TFI_all = [
 		info: "papierów dłużnych polskich korporacyjnych"
 	},
 	{
+		source: "ANALIZY", symbol: "ARK29",
+		name: "Santander Obligacji Korporacyjnych",
+		href: "/fundusze-inwestycyjne-otwarte/ARK29/santander-obligacji-korporacyjnych",
+		type: "Dłużne",
+		firm: "Santander FIO",
+		info: "papierów dłużnych polskich korporacyjnych"
+	},
+	{
 		source: "ANALIZY", symbol: "ARS11",
 		name: "Santander Obligacji Skarbowych",
 		href: "/fundusze-inwestycyjne-otwarte/ARS11/santander-obligacji-skarbowych-s",
@@ -4513,6 +4521,7 @@ export const TFI_all = [
 		info: "akcji globalnych rynków EM"
 	},
 	//MSCI MIN volatility developed markets
+  /*
 	{
 		source: "ETFEOD", symbol: "MINV.LSE",
 		name: "ISHARES EDGE MSCI WORLD MINIMUM VOLATILITY UCITS (LSE)",
@@ -4529,6 +4538,7 @@ export const TFI_all = [
 		firm: "IE00B8FHGS14",
 		info: "akcji globalnych rynków rozwiniętych"
 	},
+  */
   //General
   {
 		source: "ETFEOD", symbol: "GSPC.INDX",
@@ -4553,5 +4563,21 @@ export const TFI_all = [
 		type: "Exchange",
 		firm: "",
 		info: "akcji USA"
+	},
+  {
+		source: "ETFEOD", symbol: "VUKE.LSE",
+		name: "Vanguard FTSE 100 UCITS ETF",
+		href: "",
+		type: "Exchange",
+		firm: "",
+		info: "akcji GB"
+	},
+	{
+		source: "CNBC", symbol: "US10Y",
+		name: "US10Y",
+		href: "",
+		type: "US10Y",
+		firm: "FED",
+		info: "US bonds"
 	}
 ]

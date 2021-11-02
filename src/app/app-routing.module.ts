@@ -13,6 +13,8 @@ import { RegisterComponent } from './register/register.component';
 import { AddRegisterComponent } from './register/add-register/add-register.component';
 import { RegisterDetailsComponent } from './register/register-details/register-details.component';
 import { HeatMapComponent } from './heat-map/heat-map.component';
+import { EtfValueRateComponent } from './etf-value-rate/etf-value-rate.component';
+
 
 const routes: Routes = [
   { path: '', component: TfismetaComponent/*, canActivate: [AuthGuard]*/ },
@@ -24,7 +26,8 @@ const routes: Routes = [
   { path: 'funds', component: FundsComponent, canActivate: [AuthGuard] },
   { path: 'compare/:method/:symbols/:date/:period', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'occasion/preview/:mode/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ },
-  { path: 'heatmap/:symbols/:date', component: HeatMapComponent/*, canActivate: [AuthGuard]*/ }
+  { path: 'heatmap/:symbols/:date', component: HeatMapComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'etf/:symbols/:date', component: EtfValueRateComponent/*, canActivate: [AuthGuard]*/ }
 ];
 
 @NgModule({
