@@ -3,7 +3,7 @@ import { combineLatest, Subscription } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiService } from '../api.service';
 import * as Highcharts from 'highcharts';
-import { TFI_all } from './../tfismeta/tfi-all.js';
+import { TFI_all } from './../tfismeta/tfi-all';
 
 @Component({
   selector: 'app-occasion-preview',
@@ -58,7 +58,9 @@ export class OccasionPreviewComponent implements OnInit {
           text: title
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       xAxis: {

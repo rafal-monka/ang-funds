@@ -20,7 +20,8 @@ export class Utils {
           wsURL = wsURL.concat('ws://');
       }
       // Concatenate the hostname onto the URL.
-      wsURL = wsURL.concat(l.hostname);
+      wsURL = wsURL.concat(l.hostname.replace("b4a.app", "b4a.io"));
+
       // Now process any non-standard port numbers.
       if  (l.port !== "80" && l.port !== "443" && l.port.length !== 0) {
           let port = (l.port === "4200") ? "8080" : l.port

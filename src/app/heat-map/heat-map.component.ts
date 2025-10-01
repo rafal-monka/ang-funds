@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { ApiService } from '../api.service';
-import { TFI_all } from '../tfismeta/tfi-all.js';
+import { TFI_all } from '../tfismeta/tfi-all';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

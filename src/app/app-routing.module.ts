@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthGuard } from './auth/auth.guard';
-import { InterceptorService } from './auth/interceptor.service';
+//import { AuthGuard } from './auth/auth.guard';
+//import { InterceptorService } from './auth/interceptor.service';
 import { FundsComponent } from './funds/funds.component'
 import { RoiComponent } from './roi/roi.component'
 import { TfisComponent } from './tfis/tfis.component'
@@ -21,9 +21,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'register/add', component: AddRegisterComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'register/details', component: RegisterDetailsComponent/*, canActivate: [AuthGuard]*/ },
-  { path: 'roi', component: RoiComponent, canActivate: [AuthGuard] },
-  { path: 'tfi/:symbol', component: TfisComponent, canActivate: [AuthGuard] },
-  { path: 'funds', component: FundsComponent, canActivate: [AuthGuard] },
+  { path: 'roi', component: RoiComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'tfi/:symbol', component: TfisComponent /*, canActivate: [AuthGuard]*/ },
+  { path: 'funds', component: FundsComponent /*, canActivate: [AuthGuard]*/ },
   { path: 'compare/:method/:symbols/:date/:period', component: FundCompareComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'occasion/preview/:mode/:symbols', component: OccasionPreviewComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'heatmap/:symbols/:date', component: HeatMapComponent/*, canActivate: [AuthGuard]*/ },
@@ -32,7 +32,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule] /*,
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -40,5 +40,6 @@ const routes: Routes = [
       multi: true
     }
   ]
+  */
 })
 export class AppRoutingModule { }

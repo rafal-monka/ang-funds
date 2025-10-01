@@ -1,3 +1,5 @@
+//To generate dist
+//ng build ang-funds --configuration=production
 export const TFI_all = [
 	{
 		source: "ANALIZY", symbol: "AGF07",
@@ -3832,28 +3834,12 @@ export const TFI_all = [
 		info: "papierów dłużnych europejskich uniwersalne"
 	},
 	{
-		source: "ANALIZY", symbol: "ARK29S",
-		name: "Santander Obligacji Korporacyjnych",
-		href: "/fundusze-inwestycyjne-otwarte/ARK29S/santander-obligacji-korporacyjnych-s",
+		source: "ANALIZY", symbol: "ARK67",
+		name: "Santander Obligacji Uniwersalny",
+		href: "/fundusze-inwestycyjne-otwarte/ARK67/santander-obligacji-uniwersalny",
 		type: "Dłużne",
 		firm: "Santander FIO",
-		info: "papierów dłużnych polskich korporacyjnych"
-	},
-	{
-		source: "ANALIZY", symbol: "ARK29",
-		name: "Santander Obligacji Korporacyjnych",
-		href: "/fundusze-inwestycyjne-otwarte/ARK29/santander-obligacji-korporacyjnych",
-		type: "Dłużne",
-		firm: "Santander FIO",
-		info: "papierów dłużnych polskich korporacyjnych"
-	},
-	{
-		source: "ANALIZY", symbol: "ARS11",
-		name: "Santander Obligacji Skarbowych",
-		href: "/fundusze-inwestycyjne-otwarte/ARS11/santander-obligacji-skarbowych-s",
-		type: "Dłużne",
-		firm: "Santander FIO",
-		info: "papierów dłużnych polskich skarbowych długoterminowych"
+		info: "papierów dłużnych polskich uniwersalne"
 	},
 	{
 		source: "ANALIZY", symbol: "ARK34",
@@ -4414,6 +4400,14 @@ export const TFI_all = [
 		type: "Dłużne",
 		firm: "",
 		info: "papierów dłużnych polskich uniwersalne"
+	},
+	{
+		source: "ANALIZY", symbol: "MBK03",
+		name: "mFundusz Konserwatywny SFIO (przekształcony)",
+		href: "/fundusze-inwestycyjne-otwarte/MBK03/mfundusz-konserwatywny-sfio",
+		type: "Dłużne",
+		firm: "",
+		info: "papierów dłużnych polskich skarbowych krótkoterminowych"
 	},
 	{
 		source: "ANALIZY", symbol: "SKR96",

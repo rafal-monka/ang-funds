@@ -3,7 +3,7 @@ import { combineLatest, Subscription, Observable } from 'rxjs'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiService } from '../api.service';
 import * as Highcharts from 'highcharts';
-import { Utils } from './../utils.js';
+import { Utils } from './../utils';
 
 @Component({
   selector: 'app-fund-compare',
@@ -51,7 +51,9 @@ export class FundCompareComponent implements OnInit {
     Highcharts.chart('chart', {
       chart: {
           type: type,
-          zoomType: 'xy'
+          zooming: {
+              type: 'xy'
+          }
       },
       title: {
           text: '...'
@@ -69,7 +71,9 @@ export class FundCompareComponent implements OnInit {
           text: null
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: type
       },
       yAxis: [{
@@ -91,12 +95,12 @@ export class FundCompareComponent implements OnInit {
           //type: 'datetime',
           //tickInterval: (period === 'M' ? 30 : period === 'Y' ? 365 : 90) * 24 * 3600 * 1000,
           type: "datetime",
-          labels: {
+          /*labels: {
             formatter: function() {
               let format = (period === 'D' ? '%Y %b %e' : '%Y %b')
               return Highcharts.dateFormat(format, this.value) //https://api.highcharts.com/class-reference/Highcharts.Time
             }
-          },
+          },*/
           startOnTick: true, //https://www.highcharts.com/forum/viewtopic.php?t=40059
           endOnTick: true,
           // tickPositioner: ,

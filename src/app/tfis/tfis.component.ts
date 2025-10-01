@@ -3,7 +3,7 @@ import { combineLatest, Subscription } from 'rxjs'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiService } from '../api.service';
 import * as Highcharts from 'highcharts';
-import { Utils } from './../utils.js';
+import { Utils } from './../utils';
 
 @Component({
   selector: 'app-tfis',
@@ -35,7 +35,9 @@ export class TfisComponent implements OnInit {
           text: title
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line',
           events: {
             load: function() {
@@ -85,7 +87,9 @@ export class TfisComponent implements OnInit {
           text: title
       },
       chart: {
-          zoomType: 'x'//,
+          zooming: {
+              type: 'x'
+          }//,
           //type: 'line'
       },
       xAxis: {

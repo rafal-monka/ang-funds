@@ -2,75 +2,124 @@
   {{message}}
 </pre>
 
-<ngb-tabset [destroyOnHide]="false">
+<!--
+  <div *ngFor="let class of fundClasses; let i=index">
+    <app-pivot-table
+      [dicts]="groupedUR[i]"
+      [(monthlyArr)]="groupedArr[i]">
+    </app-pivot-table>
+  </div>
+-->
 
-    <ngb-tab *ngFor="let class of fundClasses; let i=index" title="{{class}}">
-        <ng-template ngbTabContent>
+<div *ngFor="let class of fundClasses; let i=index">
+  <br/><pre>Class: {{class}}</pre>
+  <!--
+  <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
 
-            <div  class="tab">
-                <!-- {{class}} index={{i}} -->
-                <highcharts-chart
-                  id="chart{{class}}"
-                  [Highcharts]="Highcharts"
-                  style="height: 400px; display: block; border: 1px solid lightgrey">
-                </highcharts-chart>
-
-                <div>
-                  <app-pivot-table
-                    [dicts]="groupedUR[i]"
-                    [(monthlyArr)]="groupedArr[i]">
-                  </app-pivot-table>
-                </div>
-
-                <div>
-                  <app-table-lo
-                    [fundsLO]="lineOfDefence[i]"
-                    [chartID]="'chartLO'+class"
-                    [highChart]="Highcharts"></app-table-lo>
-                </div>
-
+    <li *ngFor="let class of fundClasses; let i=index" title="{{class}}" [ngbNavItem]="i">
+      <ng-template ngbTabContent>
+  -->
+            <!-- {{class}} index={{i}} -->
+            <div>
+              <app-pivot-table
+                [dicts]="groupedUR[i]"
+                [(monthlyArr)]="groupedArr[i]">
+              </app-pivot-table>
             </div>
 
-        </ng-template>
-    </ngb-tab>
-
-    <ngb-tab title="Total">
-        <ng-template ngbTabContent>
-
-            <div  class="tab">
-                <highcharts-chart
-                  id="totalValueChart"
-                  [Highcharts]="Highcharts"
-                  style="height: 400px; display: block; border: 1px solid lightgrey">
-                </highcharts-chart>
-
-                <br>
-                <app-total-table [table]="dataTotalClass"></app-total-table>
-
-                <br>
-                <app-total-table [table]="dataTotalTFI"></app-total-table>
-
-                <br>
-                <app-total-table [table]="dataTotalFund"></app-total-table>
-
-                <br>Spis:
-                <table border="1">
-                  <tr *ngFor="let f of dataTotalFund; let i=index">
-                    <td>{{i+1}}</td>
-                    <td>{{f.symbol}}</td>
-                    <td>{{f.name}}</td>
-                    <td>{{f.sumValn  | number:'1.0-0'}}</td>
-                  </tr>
-
-                </table>
-
+            <div>
+              <highcharts-chart
+                id="chart{{class}}"
+                [Highcharts]="Highcharts"
+                style="height: 400px; display: block; border: 1px solid lightgrey">
+              </highcharts-chart>
             </div>
+            <!--
+            <div>
+              <app-table-lo
+                [fundsLO]="lineOfDefence[i]"
+                [chartID]="'chartLO'+class"
+                [highChart]="Highcharts"></app-table-lo>
+            </div>
+          -->
+  <!--
+    </ng-template>
+    </li>
+  -->
+</div>
 
-        </ng-template>
+<br/><br/>
+<div>
+  <highcharts-chart
+    id="totalValueChart"
+    [Highcharts]="Highcharts"
+    style="height: 400px; display: block; border: 1px solid lightgrey">
+  </highcharts-chart>
 
-    </ngb-tab>
+  <br>
+  <app-total-table [table]="dataTotalClass"></app-total-table>
 
-</ngb-tabset>
+  <br>
+  <app-total-table [table]="dataTotalTFI"></app-total-table>
+
+  <br>
+  <app-total-table [table]="dataTotalFund"></app-total-table>
+
+  <br>Spis:
+  <table border="1">
+    <tr *ngFor="let f of dataTotalFund; let i=index">
+      <td>{{i+1}}</td>
+      <td>{{f.symbol}}</td>
+      <td>{{f.name}}</td>
+      <td>{{f.sumValn  | number:'1.0-0'}}</td>
+    </tr>
+
+  </table>
+
+</div>
+  <!--
+  <li [ngbNavItem]="fundClasses.length">
+    <ng-template ngbTabContent>
+
+      <div  class="tab">
+          <highcharts-chart
+            id="totalValueChart"
+            [Highcharts]="Highcharts"
+            style="height: 400px; display: block; border: 1px solid lightgrey">
+          </highcharts-chart>
+
+          <br>
+          <app-total-table [table]="dataTotalClass"></app-total-table>
+
+          <br>
+          <app-total-table [table]="dataTotalTFI"></app-total-table>
+
+          <br>
+          <app-total-table [table]="dataTotalFund"></app-total-table>
+
+          <br>Spis:
+          <table border="1">
+            <tr *ngFor="let f of dataTotalFund; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{f.symbol}}</td>
+              <td>{{f.name}}</td>
+              <td>{{f.sumValn  | number:'1.0-0'}}</td>
+            </tr>
+
+          </table>
+
+      </div>
+
+    </ng-template>
+
+  </li>
+  -->
+
+<!--
+</ul>
+-->
+
+
 <br>
 
 

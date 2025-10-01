@@ -31,7 +31,9 @@ export class RoiComponent implements OnInit {
           text: 'ROI-'+period
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       xAxis: {
@@ -52,7 +54,9 @@ export class RoiComponent implements OnInit {
           text: 'LR-value-diff%'
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       xAxis: {

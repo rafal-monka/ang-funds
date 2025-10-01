@@ -107,4 +107,8 @@ export class ApiService {
   getCurrencyRates$(symbol, dateFrom, dateTo): Observable<any> {
     return this.http.get(`https://api.nbp.pl/api/exchangerates/rates/a/${symbol}/${dateFrom}/${dateTo}/?format=json`);
   }
+
+  getCurrencyRates2$(symbol, dateFrom, dateTo): Observable<any> {
+    return this.http.get(`/api/currency-rates/rates/${symbol}/${dateFrom}/${dateTo}`);
+  }
 }

@@ -45,7 +45,9 @@ export class FundsComponent implements OnInit {
       },
       chart: {
           height: '30%',
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       yAxis: [{
@@ -75,7 +77,9 @@ export class FundsComponent implements OnInit {
           text: 'Trailing stop'
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       yAxis: {
@@ -99,7 +103,9 @@ export class FundsComponent implements OnInit {
           text: 'Bonds'
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       yAxis: [{
@@ -151,7 +157,9 @@ export class FundsComponent implements OnInit {
           text: 'Stocks'
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       yAxis: [{

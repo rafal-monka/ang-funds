@@ -6,11 +6,11 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="roi">ROI</a>
+        <a class="nav-link" routerLink="roi" *ngIf="auth.loggedIn">ROI</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" routerLink="tfi">TFI</a>
+        <a class="nav-link" routerLink="tfi" *ngIf="auth.loggedIn">TFI</a>
       </li>
 
 
@@ -19,14 +19,14 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" routerLink="funds">Funds (old)</a>
+        <a class="nav-link" routerLink="funds" *ngIf="auth.loggedIn">Funds (old)</a>
       </li>
 
       <li class="nav-item">
-        <button class="btn btn-success">Log in</button>
+        <button class="btn btn-success" (click)="auth.login()" *ngIf="!auth.loggedIn">Log in</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-danger">Log out</button>
+        <button class="btn btn-danger" (click)="auth.logout()" *ngIf="auth.loggedIn">Log out</button>
       </li>
     </ul>
   </div>

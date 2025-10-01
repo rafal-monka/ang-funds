@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { ApiService } from '../api.service';
 import * as Highcharts from 'highcharts';
-import { TFI_all } from '../tfismeta/tfi-all.js';
+import { TFI_all } from '../tfismeta/tfi-all';
 
 @Component({
   selector: 'app-register',
@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
 
   message: any
   fundClasses : Array<any> = ['A','A+','B','C','D']
+  activeTab: any = 1;
 
   loading: Boolean
 
@@ -73,7 +74,9 @@ export class RegisterComponent implements OnInit {
           text: null
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       yAxis: [{
@@ -113,7 +116,9 @@ export class RegisterComponent implements OnInit {
       },
       chart: {
           //height: '50%',
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       yAxis: [{
@@ -199,7 +204,7 @@ export class RegisterComponent implements OnInit {
 
                   //line of defence
                   this.lineOfDefence[c] = registers.lineOfDefence.filter(reg => reg.fundClass === this.fundClasses[c])
-                  this.setChartLO('chartLO'+this.fundClasses[c], 'Threshold '+this.lineOfDefence[c][0].threshold, this.lineOfDefence[c], 0.25)
+                  //this.setChartLO('chartLO'+this.fundClasses[c], 'Threshold '+this.lineOfDefence[c][0].threshold, this.lineOfDefence[c], 0.25)
               }
 
               //calculate total (gropued by 3 separete criteria: class, TFI, fund)

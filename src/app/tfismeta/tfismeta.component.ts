@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest, Subscription } from 'rxjs'
 import { ApiService } from '../api.service';
 import { MessagesService } from '../messages.service'
-import { TFI_all } from './tfi-all.js';
-import { Utils } from './../utils.js';
+import { TFI_all } from './tfi-all';
+import { Utils } from './../utils';
 
 const CONST_ARCHEO_DATE = new Date("1920-01-01")
 

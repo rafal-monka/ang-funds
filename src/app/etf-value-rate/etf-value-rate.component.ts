@@ -15,6 +15,7 @@ export class EtfValueRateComponent implements OnInit {
   subscription: Subscription
   etfValues: Array<any>
   currencyRates: Array<any>
+  currencyRates2: Array<any>
   combinedArray: Array<any>
 
 
@@ -23,12 +24,16 @@ export class EtfValueRateComponent implements OnInit {
   private setChart(series) {
     //console.log('setChart', series)
 
+
+
     Highcharts.chart('chart', {
       title: {
           text: null
       },
       chart: {
-          zoomType: 'x',
+          zooming: {
+              type: 'x'
+          },
           type: 'line'
       },
       yAxis: [{
@@ -84,21 +89,25 @@ export class EtfValueRateComponent implements OnInit {
         this.subscription = combineLatest(
           [
             this.api.tfivaluesDate$(scope[0][0],date), //SWDA.LSE
-            this.api.getCurrencyRates$(scope[0][1], date, today) //GBP
+            //this.api.getCurrencyRates$(scope[0][1], date, today), //currencies from NBP
+            this.api.getCurrencyRates2$(scope[0][1], date, today) //currencies from db
           ]
-        ).subscribe(([etfValues, currencyRates]) => {
+        ).subscribe(([etfValues, /*currencyRates,*/ currencyRates2]) => {
             let etfValuesData = []
             let ratesData = []
             let valuesXData = []
 
             this.etfValues = etfValues
-            this.currencyRates = currencyRates
-            let rate0 = currencyRates.rates[0].mid
+            //this.currencyRates = currencyRates
+            this.currencyRates2 = currencyRates2
+            //let rate0 = currencyRates.rates[0].mid
+            let rate0 = currencyRates2.rates[0].mid
             let valueX0 = Math.round(etfValues[0].data[0][1] * rate0 *100)/100
             //@@@multiple: GBP, EUR
             this.combinedArray = etfValues[0].data.map(e => {
                 let date = e[3].substring(0,10)
-                let rates = currencyRates.rates.filter(r => r.effectiveDate <= date)
+                //let rates = currencyRates.rates.filter(r => r.effectiveDate <= date)
+                let rates = currencyRates2.rates.filter(r => r.effectiveDate.substring(0,10) <= date)
                 let rate = rates[rates.length-1].mid
                 let valueX = Math.round(e[1] * rate *100)/100
 
